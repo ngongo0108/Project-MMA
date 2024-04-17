@@ -19,7 +19,7 @@ const ProductCard = ({ item }) => {
       className="flex justify-end relative p-4 py-6 space-y-2 mb-5"
     >
       <Image
-        source={{ uri: item.image }}
+        source={{ uri: item.image[0] }}
         style={{ width: wp(44), height: wp(44), borderRadius: 35 }}
         className="absolute"
       />
@@ -49,7 +49,7 @@ const ProductCard = ({ item }) => {
         <TouchableOpacity
           onPress={() => {
             // dispatch(getWatch(item.id));
-            navigation.navigate("DetailProduct");
+            navigation.navigate("DetailProduct", { itemId: item.id });
           }}
         >
           <View className="bg-white p-3 rounded-full">
