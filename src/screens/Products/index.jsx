@@ -72,24 +72,6 @@ const ProductsScreen = () => {
         }}
       />
       <SafeAreaView className="flex-1">
-        {/* top button */}
-        <View className="flex-row justify-between items-center mx-4">
-          <View className="bg-white shadow-md rounded-2xl p-3">
-            <Bars3CenterLeftIcon size={25} stroke={100} color="black" />
-          </View>
-          <View
-            className="rounded-2xl"
-            style={{ backgroundColor: "rgba(255,255,255,0.7)", padding: 3 }}
-          >
-            <Image
-              className="h-12 w-12 rounded-2xl"
-              source={{
-                uri: "https://storage.googleapis.com/cdn-entrade/bovagau-meme/screenshot_93_1682412512",
-              }}
-              style={{ backgroundColor: "rgba(255,255,255,0.7)" }}
-            />
-          </View>
-        </View>
         {/* punch line */}
         <View className="my-12 space-y-2">
           <Text className="mx-4 text-5xl font-medium text-gray-100">
