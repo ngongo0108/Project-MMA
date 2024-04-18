@@ -5,6 +5,7 @@ import CartScreen from "./Cart";
 import ProductsScreen from "./Products";
 import DetailProductScreen from "./DetailProduct";
 import OrdersScreen from "./Orders";
+import OrderTrackingScreen from "./OrderTracking";
 export {
   AppointmentScreen,
   HomeScreen,
@@ -13,4 +14,5 @@ export {
   ProductsScreen,
   DetailProductScreen,
   OrdersScreen,
+  OrderTrackingScreen,
 };
