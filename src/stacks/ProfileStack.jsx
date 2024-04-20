@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { Profile, OrdersScreen } from "../screens";
+import { Profile, OrdersScreen, OrderTrackingScreen } from "../screens";
+
+
 
 
 const ProfileStack = () => {
@@ -22,8 +24,8 @@ const ProfileStack = () => {
         }}
       />
       <Stack.Screen
-        name="Orders"
-        component={OrdersScreen}
+        name="OrderTracking"
+        component={OrderTrackingScreen}
         options={{
           headerShown: false,
         }}

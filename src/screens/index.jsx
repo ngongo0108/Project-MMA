@@ -6,7 +6,11 @@ import ProductsScreen from "./Products";
 import DetailProductScreen from "./DetailProduct";
 import OrdersScreen from "./Orders";
 
+import OrderTrackingScreen from "./OrderTracking";
+
+
 import Profile from "./Profile";
+
 
 
 export {
@@ -17,5 +21,7 @@ export {
   ProductsScreen,
   DetailProductScreen,
   OrdersScreen,
+  OrderTrackingScreen,
   Profile
+
 };
