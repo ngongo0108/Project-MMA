@@ -2,7 +2,7 @@ import React, {useNavigation} from "react";
 import { View, Text, ScrollView, TextInput, Image, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-const MyWallet = () => {
+const MyWalletScreen = () => {
     return(
         <ScrollView style={{width:"100%"}}>
         <View style={{backgroundColor: '#F9D2E5', flexDirection: 'column', justifyContent:'center', alignItems: 'center', paddingTop: 30}}>
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
 })
-export default MyWallet;
+export default MyWalletScreen;

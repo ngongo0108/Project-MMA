@@ -1,9 +1,16 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { Profile, OrdersScreen, OrderTrackingScreen } from "../screens";
-
-
-
+import { ProfileScreen, 
+  OrdersScreen, 
+  OrderTrackingScreen,
+  AboutusScreen,
+  ChangePassScreen,
+  EditProfileScreen,
+  HelpScreen,
+  MyWalletScreen,
+  PolicyScreen,
+  ContractScreen,
+  ContractDetailScreen } from "../screens";
 
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
@@ -11,7 +18,63 @@ const ProfileStack = () => {
     <Stack.Navigator initialRouteName="Profile">
       <Stack.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="About Us"
+        component={AboutusScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Change Password"
+        component={ChangePassScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Edit Profile"
+        component={EditProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Help & Contact Us"
+        component={HelpScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="My Wallet"
+        component={MyWalletScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Privacy Policy"
+        component={PolicyScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Contract"
+        component={ContractScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Contract Detail"
+        component={ContractDetailScreen}
         options={{
           headerShown: false,
         }}

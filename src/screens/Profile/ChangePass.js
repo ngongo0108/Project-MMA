@@ -1,10 +1,21 @@
 import React from "react";
-import { View, Text, ScrollView, TextInput, StyleSheet, Button } from "react-native";
-
-const ChangePass = () => {
+import { View, Text, ScrollView, TextInput, StyleSheet, Button, TouchableOpacity } from "react-native";
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+const ChangePassScreen = () => {
+    const navigation = useNavigation();
     const [text, onChangeText] = React.useState('');
     return(
         <ScrollView style={{width:"100%"}}>
+        <View className="flex-row justify-between mx-4 items-center">
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{backgroundColor: '#fff', padding: 15, borderRadius: 10, marginTop: 10, flexDirection:'row', flex: 1}}
+          >
+            <AntDesign name="left" size={24} color="black" />
+            <Text style={{fontSize: 20, marginLeft: 10}}> Change your password</Text>
+          </TouchableOpacity>
+        </View>
             <View style={{marginTop: 20}}>
                 <Text style={styles.text}>Old Password</Text>
                 <TextInput
@@ -49,4 +60,4 @@ const styles = StyleSheet.create({
         marginLeft: 15,
     },
 })
-export default ChangePass;
+export default ChangePassScreen;

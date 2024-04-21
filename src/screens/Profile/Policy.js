@@ -1,10 +1,20 @@
 import React from "react";
-import { View, Text, ScrollView, TextInput, Image, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-
-const Policy = () => {
+import { useNavigation } from "@react-navigation/native";
+const PolicyScreen = () => {
+    const navigation = useNavigation();
     return(
         <ScrollView>
+        <View className="flex-row justify-between mx-4 items-center">
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{backgroundColor: '#fff', padding: 15, borderRadius: 10, marginTop: 10, flexDirection:'row', flex: 1}}
+          >
+            <AntDesign name="left" size={24} color="black" />
+            <Text style={{fontSize: 20, marginLeft: 10}}> Privacy Policy</Text>
+          </TouchableOpacity>
+        </View>
             <View style={{padding: 20}}>
                 <View >
                     <Text style={{ paddingBottom: 10, fontSize: 15}}>
@@ -58,4 +68,4 @@ const styles = StyleSheet.create({
         fontSize: 15
     }
 })
-export default Policy;
+export default PolicyScreen;

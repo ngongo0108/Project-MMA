@@ -2,9 +2,10 @@ import React from "react";
 import { View, Text, ScrollView, TextInput, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-
-const Profile = () => {
+import { Octicons } from '@expo/vector-icons';
+const ProfileScreen = () => {
     const navigation = useNavigation();
     return(
         <ScrollView style={{width:"100%"}}>
@@ -22,11 +23,42 @@ const Profile = () => {
                     <Text style={{fontSize: 15, color: 'gray'}}>john@yopmail.com</Text>
                 </View>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+            <View style={{backgroundColor: '#fff'}}>
+                <View style={{flexDirection: 'column', justifyContent:'center', alignItems: 'center', paddingLeft: 15}}>
+                <View style={{flexDirection: 'row'}}>
+                    <AntDesign name="wallet" size={24} color="#393E41" padding={10} />
+                    <Text style={{fontSize: 15, fontWeight: "300", padding: 10}}>Wallet</Text>
+                </View>
+                
+                    <Text style={{fontSize: 20, fontWeight: "500", color: "red"}}><FontAwesome name="dollar" size={15} color="red" /> 999 999 999</Text>
+                    <TouchableOpacity>
+                        <Text style={{fontSize: 15, padding: 10, color:"#C23A27"}}><AntDesign name="plus" size={20} color="#C23A27" /> ADD MONEY</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate("Change Password")}>
                 <View style={styles.container}>
                     <View style={{flexDirection: 'row', alignItems:'center'}}>
                         <AntDesign name="setting" size={24} color="#393E41" padding={15} />
-                        <Text style={{fontSize: 20, fontWeight: 600, color: '#393E41'}}>Settings</Text>
+                        <Text style={{fontSize: 20, fontWeight: 600, color: '#393E41'}}>Change Password</Text>
+                    </View>
+                    <AntDesign name="right" size={24} color="#393E41" marginRight={10}/>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Orders")}>
+                <View style={styles.container}>
+                    <View style={{flexDirection: 'row', alignItems:'center'}}>
+                        <Octicons name="list-ordered" size={24} color="#393E41" padding={15}/>
+                        <Text style={{fontSize: 20, fontWeight: 600, color: '#393E41'}}>Orders</Text>
+                    </View>
+                    <AntDesign name="right" size={24} color="#393E41" marginRight={10}/>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Contract")}>
+                <View style={styles.container}>
+                    <View style={{flexDirection: 'row', alignItems:'center'}}>
+                        <AntDesign name="filetext1" size={24} color="#393E41" padding={15} />
+                        <Text style={{fontSize: 20, fontWeight: 600, color: '#393E41'}}>Contract</Text>
                     </View>
                     <AntDesign name="right" size={24} color="#393E41" marginRight={10}/>
                 </View>
@@ -77,10 +109,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         // backgroundColor: '#F5F5F5',
         borderRadius: 10,
-        
         marginLeft: 20,
         marginRight: 20,
         marginTop: 15,
     }
 })
-export default Profile;
+export default ProfileScreen;

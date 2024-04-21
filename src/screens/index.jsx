@@ -5,14 +5,16 @@ import CartScreen from "./Cart";
 import ProductsScreen from "./Products";
 import DetailProductScreen from "./DetailProduct";
 import OrdersScreen from "./Orders";
-
 import OrderTrackingScreen from "./OrderTracking";
 
-
-import Profile from "./Profile";
-
-
-
+import AboutusScreen from "./Profile/Aboutus";
+import ChangePassScreen from "./Profile/ChangePass";
+import EditProfileScreen from "./Profile/EditProfile";
+import HelpScreen from "./Profile/Help";
+import MyWalletScreen from "./Profile/MyWallet";
+import PolicyScreen from "./Profile/Policy";
+import ContractScreen from "./Profile/Contract";
+import ContractDetailScreen from "./Profile/ContractDetail";
 export {
   AppointmentScreen,
   HomeScreen,
@@ -22,6 +24,12 @@ export {
   DetailProductScreen,
   OrdersScreen,
   OrderTrackingScreen,
-  Profile
-
+  AboutusScreen,
+  ChangePassScreen,
+  EditProfileScreen,
+  HelpScreen,
+  MyWalletScreen,
+  PolicyScreen,
+  ContractScreen,
+  ContractDetailScreen
 };

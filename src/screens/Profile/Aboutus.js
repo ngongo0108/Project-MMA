@@ -1,9 +1,20 @@
 import React from "react";
 import { View, Text, ScrollView, TextInput, Image, TouchableOpacity, StyleSheet, Button } from "react-native";
-
-const Aboutus = () => {
+import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from '@expo/vector-icons';
+const AboutusScreen = () => {
+    const navigation = useNavigation();
     return(
         <ScrollView>
+            <View className="flex-row justify-between mx-4 items-center">
+            <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{backgroundColor: '#fff', padding: 15, borderRadius: 10, marginTop: 10, flexDirection:'row', flex: 1}}
+            >
+                <AntDesign name="left" size={24} color="black" />
+                <Text style={{fontSize: 20, marginLeft: 10}}> About Us</Text>
+            </TouchableOpacity>
+            </View>
             <View style={{padding: 20}}>
                 <Image style={{height: 300, width: '100', borderRadius: 20}} source ={{uri: 'https://thewellesleynews.com/wp-content/uploads/2020/09/avatar.jpg'}}/>
                 <View >
@@ -37,4 +48,4 @@ const styles = StyleSheet.create({
         fontSize: 15
     }
 })
-export default Aboutus;
+export default AboutusScreen;

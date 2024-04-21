@@ -1,10 +1,21 @@
-import React, {useNavigation} from "react";
+import React from "react";
 import { View, Text, ScrollView, TextInput, Image, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-
-const EditProfile = () => {
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+const EditProfileScreen = () => {
+    const navigation = useNavigation();
     return(
         <ScrollView>
+            <View className="flex-row justify-between mx-4 items-center">
+            <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{backgroundColor: '#fff', padding: 15, borderRadius: 10, marginTop: 10, flexDirection:'row', flex: 1}}
+            >
+                <AntDesign name="left" size={24} color="black" />
+                <Text style={{fontSize: 20, marginLeft: 10}}>Edit Profile</Text>
+            </TouchableOpacity>
+            </View>
             <View style={{ alignItems:'center', margin: 20}}>
                 <Image style={{height: 180, width: 180, borderRadius: 100, position:'relative'}} source ={{uri: 'https://thewellesleynews.com/wp-content/uploads/2020/09/avatar.jpg'}}/>
                 <TouchableOpacity>
@@ -17,6 +28,8 @@ const EditProfile = () => {
                 <TextInput style={styles.textInput}>John Doe</TextInput>
                 <Text style={styles.text}>Name</Text>
                 <TextInput style={styles.textInput}>Thomeson John Doe</TextInput>
+                <Text style={styles.text}>Address</Text>
+                <TextInput style={styles.textInput}>Ho Chi Minh City</TextInput>
                 <Text style={styles.text}>Email</Text>
                 <TextInput style={styles.textInput}>john@yopmail.com</TextInput>
                 <Text style={styles.text}>Phone number</Text>
@@ -55,4 +68,4 @@ const styles = StyleSheet.create({
         right: -80,
     }
 })
-export default EditProfile;
+export default EditProfileScreen;

@@ -1,12 +1,22 @@
-import React, {useNavigation} from "react";
+import React from "react";
 import { View, Text, ScrollView, TextInput, Image, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-
-const Help = () => {
+import { useNavigation } from "@react-navigation/native";
+const HelpScreen = () => {
+    const navigation = useNavigation();
     return(
         <ScrollView style={{width:"100%"}}>
+            <View className="flex-row justify-between mx-4 items-center">
+            <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{backgroundColor: '#fff', padding: 15, borderRadius: 10, marginTop: 10, flexDirection:'row', flex: 1}}
+            >
+                <AntDesign name="left" size={24} color="black" />
+                <Text style={{fontSize: 20, marginLeft: 10}}>Helps & Contact Us</Text>
+            </TouchableOpacity>
+            </View>
             <View style={{marginTop: 20}}>
                 <View style={{flexDirection: 'row', alignItems:'center'}}>
                     <Feather name="phone-call" size={24} color="#393E41" paddingLeft={15} />
@@ -36,4 +46,4 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
 })
-export default Help;
+export default HelpScreen;
