@@ -3,7 +3,7 @@ import { HomeScreen, ProductsScreen, DetailProductScreen } from "../screens";
 const HomeStack = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Products">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
         component={HomeScreen}
