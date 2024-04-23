@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import Protected from "./protect/protectStack";
+import ProtectedLogin from "./protect/protectLogin";
 import {
   ProfileScreen,
   OrdersScreen,
@@ -20,13 +21,9 @@ const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator initialRouteName="Profile">
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="Profile" options={{ headerShown: false }}>
+        {() => <Protected Component={ProfileScreen} />}
+      </Stack.Screen>
       <Stack.Screen
         name="About Us"
         component={AboutusScreen}
@@ -97,13 +94,9 @@ const ProfileStack = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="Login" options={{ headerShown: false }}>
+        {() => <Protected Component={LoginScreen} />}
+      </Stack.Screen>
       <Stack.Screen
         name="SignUp"
         component={RegisterScreen}
