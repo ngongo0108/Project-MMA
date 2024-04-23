@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   ScrollView,
-  TextInput,
   Image,
   TouchableOpacity,
   StyleSheet,
@@ -13,27 +12,38 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
+import { UserService } from "../../services";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/userAction";
+import { useSelector } from "react-redux";
 const ProfileScreen = () => {
+  // const users = useSelector((state) => state.user);
+  const dispacth = useDispatch();
   const navigation = useNavigation();
+  const [user, setUser] = useState();
+  useEffect(() => {
+    const fetchDataUser = async () => {
+      const response = await UserService.getInfo();
+      console.log('response User: ',response);
+      setUser(response);
+    };
+    fetchDataUser();
+  }, []);
+  const handleLogout = () => {
+    dispacth(logout());
+  };
   return (
-    <ScrollView style={{ width: "100%" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 40,
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
+    <ScrollView className="w-full  mb-2">
+      <View className="flex-auto flex-row mt-5 items-center justify-around">
         <Text></Text>
         <Text
-          style={{
-            color: "#2D2D2F",
-            fontSize: 25,
-            fontWeight: "bold",
-            position: "relative",
-          }}
+          className="#2D2D2F fon"
+          // style={{
+          //   color: "#2D2D2F",
+          //   fontSize: 25,
+          //   fontWeight: "bold",
+          //   position: "relative",
+          // }}
         >
           My account
         </Text>
@@ -48,7 +58,7 @@ const ProfileScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center", margin: 20 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", margin: 10 }}>
         <Image
           style={{ height: 100, width: 100, borderRadius: 100 }}
           source={{
@@ -171,7 +181,7 @@ const ProfileScreen = () => {
           <AntDesign name="right" size={24} color="#393E41" marginRight={10} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleLogout()}>
         <View style={styles.container}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MaterialIcons

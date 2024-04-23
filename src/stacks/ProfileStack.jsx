@@ -95,7 +95,7 @@ const ProfileStack = () => {
         }}
       />
       <Stack.Screen name="Login" options={{ headerShown: false }}>
-        {() => <Protected Component={LoginScreen} />}
+        {() => <ProtectedLogin Component={LoginScreen} />}
       </Stack.Screen>
       <Stack.Screen
         name="SignUp"

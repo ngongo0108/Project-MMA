@@ -1,3 +1,3 @@
-const API_URL_ENV = "https://f948-118-69-182-149.ngrok-free.app/api";
+API_URL_ENV = "https://c3d4-118-69-182-149.ngrok-free.app/api";
 
 export default API_URL_ENV;
