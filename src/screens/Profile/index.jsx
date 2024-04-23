@@ -13,22 +13,31 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
 import { UserService } from "../../services";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/userAction";
+import { useSelector } from "react-redux";
 const ProfileScreen = () => {
+  // const users = useSelector((state) => state.user);
+  const dispacth = useDispatch();
   const navigation = useNavigation();
   const [user, setUser] = useState();
   useEffect(() => {
     const fetchDataUser = async () => {
       const response = await UserService.getInfo();
-      console.log(response);
+      console.log('response User: ',response);
       setUser(response);
     };
     fetchDataUser();
   }, []);
+  const handleLogout = () => {
+    dispacth(logout());
+  };
   return (
-    <ScrollView className = 'w-full  mb-2'>
-      <View className = 'flex-auto flex-row mt-5 items-center justify-around'>
+    <ScrollView className="w-full  mb-2">
+      <View className="flex-auto flex-row mt-5 items-center justify-around">
         <Text></Text>
-        <Text className='#2D2D2F fon'
+        <Text
+          className="#2D2D2F fon"
           // style={{
           //   color: "#2D2D2F",
           //   fontSize: 25,
@@ -172,7 +181,7 @@ const ProfileScreen = () => {
           <AntDesign name="right" size={24} color="#393E41" marginRight={10} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleLogout()}>
         <View style={styles.container}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MaterialIcons

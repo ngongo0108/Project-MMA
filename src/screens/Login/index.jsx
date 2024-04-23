@@ -32,27 +32,22 @@ const LoginScreen = () => {
         userName: username,
         password: password,
       });
-      console.log("4444444");
-      console.log("123", result);
       if (result.isSuccess === true) {
-        console.log("login", result.data.accessToken);
+      
         dispatch(loginSuccess(result.data));
-        console.log("selectorrr", isLoggedIn);
         let accessToken = result.data.accessToken;
         let refreshToken = result.data.refreshToken;
         await AsyncStorage.setItem("accessToken", accessToken);
         await AsyncStorage.setItem("refreshToken", refreshToken);
         navigation.navigate("HomeStack");
       } else {
-        console.log("b");
+        
       }
     } catch (error) {
-      console.log("slsls", error);
-      console.log(error);
+      
     }
   };
 
-  console.log("selectorrr", isLoggedIn);
 
   return (
     <View style={styles.container}>
