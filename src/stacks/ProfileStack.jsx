@@ -12,6 +12,8 @@ import {
   PolicyScreen,
   ContractScreen,
   ContractDetailScreen,
+  LoginScreen,
+  RegisterScreen,
 } from "../screens";
 
 const ProfileStack = () => {
@@ -91,6 +93,20 @@ const ProfileStack = () => {
       <Stack.Screen
         name="OrderTracking"
         component={OrderTrackingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={RegisterScreen}
         options={{
           headerShown: false,
         }}

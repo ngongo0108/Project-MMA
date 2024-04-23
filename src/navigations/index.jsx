@@ -10,6 +10,8 @@ import {
   CartStack,
   ProfileStack,
 } from "../stacks";
+import LoginScreen from "../screens/Login";
+import { CartScreen, RegisterScreen } from "../screens";
 //Screen names
 const homeName = "HomeStack";
 const appointmentName = "AppointmentStack";
@@ -21,7 +23,7 @@ const Tab = createBottomTabNavigator();
 function MainContainer() {
   return (
     <Tab.Navigator
-      initialRouteName={homeName}
+      initialRouteName={profileName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;

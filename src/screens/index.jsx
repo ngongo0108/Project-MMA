@@ -6,7 +6,6 @@ import ProductsScreen from "./Products";
 import DetailProductScreen from "./DetailProduct";
 import OrdersScreen from "./Orders";
 import OrderTrackingScreen from "./OrderTracking";
-
 import AboutusScreen from "./Profile/Aboutus";
 import ChangePassScreen from "./Profile/ChangePass";
 import EditProfileScreen from "./Profile/EditProfile";
@@ -15,6 +14,10 @@ import MyWalletScreen from "./Profile/MyWallet";
 import PolicyScreen from "./Profile/Policy";
 import ContractScreen from "./Profile/Contract";
 import ContractDetailScreen from "./Profile/ContractDetail";
+import Profile from "./Profile";
+import LoginScreen from "./Login";
+import RegisterScreen from "./Register";
+
 export {
   AppointmentScreen,
   HomeScreen,
@@ -31,5 +34,8 @@ export {
   MyWalletScreen,
   PolicyScreen,
   ContractScreen,
-  ContractDetailScreen
+  ContractDetailScreen,
+  Profile,
+  LoginScreen,
+  RegisterScreen,
 };
