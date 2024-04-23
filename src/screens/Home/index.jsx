@@ -1,10 +1,18 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import SliderBanner from "../../components/Home/SliderBanner";
+import CategoryList from "../../components/Home/CategoryList";
+import Banner from "../../components/Home/Banner";
 
 const HomeScreen = () => {
   return (
-    <View>
-      <Text>Home Screen</Text>
-    </View>
+    <ScrollView>
+      <Text style={{ color: 'white', fontSize: 50 }}>Home Screen</Text>
+      <SliderBanner />
+      <CategoryList />
+      <SliderBanner />
+      <CategoryList />
+      <Banner />
+    </ScrollView>
   );
 };
 export default HomeScreen;

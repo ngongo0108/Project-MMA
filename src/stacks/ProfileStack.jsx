@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ProfileScreen, 
-  OrdersScreen, 
+import {
+  ProfileScreen,
+  OrdersScreen,
   OrderTrackingScreen,
   AboutusScreen,
   ChangePassScreen,
@@ -10,12 +11,13 @@ import { ProfileScreen,
   MyWalletScreen,
   PolicyScreen,
   ContractScreen,
-  ContractDetailScreen } from "../screens";
+  ContractDetailScreen,
+} from "../screens";
 
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Profile">
+    <Stack.Navigator initialRouteName="Orders">
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}

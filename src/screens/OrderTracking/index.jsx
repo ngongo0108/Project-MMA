@@ -1,6 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Platform,
+  Button,
+} from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -15,6 +23,7 @@ import {
 } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/core";
 import { SafeAreaView } from "react-native-safe-area-context";
+import DateTimePicker from "@react-native-community/datetimepicker";
 const OrderStatus = () => {
   const navigation = useNavigation();
   const iconMapping = {
@@ -33,12 +42,12 @@ const OrderStatus = () => {
         className="flex-row  relative "
       >
         <View className="relative flex-col items-center">
-          <View className="z-10 bg-teal-500 p-3 h-1/2 rounded-full">
-            <IconComponent color="#4F46E5" height={30} width={30} />
+          <View className="z-10 bg-pink-500 p-3 h-1/2 rounded-full">
+            <IconComponent color="#ffffff" height={30} width={30} />
           </View>
           {index + 1 !== trackStep.length && (
             <>
-              <View className=" bg-teal-500 h-1/2  w-1 "></View>
+              <View className=" bg-pink-300 h-1/2  w-1 "></View>
               <View className="absolute top-1/2 -mt-1.5 w-1 h-6 bg-transparent" />
             </>
           )}
@@ -74,10 +83,56 @@ const OrderStatus = () => {
       time: "Jul 21 04:40 PM",
     },
   ];
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState("Empty");
+  const onChange = (event, selectDate) => {
+    const currentDate = selectDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getDate() +
+      "/" +
+      (tempDate.getMonth() + 1) +
+      "/" +
+      tempDate.getFullYear();
+    let fTime =
+      "Hours: " + tempDate.getHours() + " | Minutes: " + tempDate.getMinutes();
+    setText(fDate + "\n" + fTime);
+  };
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
   return (
     <>
       <SafeAreaView className="flex-1">
         <StatusBar style={"light"} />
+        <Text style={{ fontWeight: "bold", fontSize: 20 }}>{text}</Text>
+        <View style={{ margin: 20 }}>
+          <Button title="DatePicker" onPress={() => showMode("date")} />
+        </View>
+        <View style={{ margin: 20 }}>
+          <Button title="TimePicker" onPress={() => showMode("time")} />
+        </View>
+
+        {show && (
+          <View>
+            <DateTimePicker
+              style={{ padding: 20, backgroundColor: "white" }}
+              className="rounded-full"
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />
+          </View>
+        )}
+
         <View className="flex-row justify-between mx-4 items-center">
           <TouchableOpacity
             onPress={() => navigation.goBack()}
