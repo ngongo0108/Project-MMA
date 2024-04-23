@@ -20,7 +20,7 @@ import {
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Profile">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Profile" options={{ headerShown: false }}>
         {() => <Protected Component={ProfileScreen} />}
       </Stack.Screen>
