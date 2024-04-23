@@ -3,6 +3,7 @@ import React from 'react'
 import SliderDate from '../../components/Booking/SliderDate'
 
 import { Button, TextInput } from 'react-native-paper';
+
 import AppointmentService from '../../services/appointment.service';
 
 const { width, height } = Dimensions.get('window');
@@ -25,8 +26,8 @@ export default function Booking() {
       <Image style={{ width: width, height: 200, opacity: 0.5, }} source={{ uri: 'https://womensmentalhealth.org/wp-content/uploads/2016/09/Mother-Infant-Love-1.jpg' }} />
 
       <ScrollView style={{ marginTop: -50, width: width, height: 1000, backgroundColor: 'white', borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
-        <View style={{ width: width }}><View style={{ paddingHorizontal: '20%', borderRadius: 80 }}><SliderDate /></View></View>
-
+        {/* <View style={{ width: width }}><View style={{ paddingHorizontal: '20%', borderRadius: 80 }}><SliderDate /></View></View> */}
+        <DatePickerSlider />
         <View style={{}}>
           <View style={{ marginVertical: 20, marginHorizontal: 8, paddingHorizontal: 20 }}>
             <TextInput
@@ -70,6 +71,7 @@ export default function Booking() {
             <TextInput
               style={styles.input}
               onChangeText={text => setPhone(text)}
+
               underlineColor='#e6417b'
               activeUnderlineColor='#e6417b'
               value={number}
@@ -78,8 +80,9 @@ export default function Booking() {
             />
 
           </View>
+
           <View style={{ width: '100%', alignItems: 'center' }}>
-            <Button mode="contained" style={{ width: '70%', height: 50, justifyContent: 'center', backgroundColor: '#e6417b' }} onPress={() => console.log('Pressed')}>
+            <Button mode="contained" style={{ width: '70%', height: 50, justifyContent: 'center', backgroundColor: '#e6417b' }} onPress={fetchCreateBooking}>
               <Text style={{ fontSize: 20, fontWeight: '600' }}>Booking</Text>
             </Button>
           </View>

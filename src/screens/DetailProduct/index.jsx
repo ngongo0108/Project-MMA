@@ -20,9 +20,11 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { ProductService } from "../../services";
-
+import { CartService, ProductService } from "../../services";
+import { useSelector } from "react-redux";
+import Toast from "react-native-toast-message";
 const DetailProductScreen = ({ route }) => {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const { itemId } = route.params;
   const flatListRef = useRef();
   const [productData, setProductData] = useState({
@@ -55,7 +57,17 @@ const DetailProductScreen = ({ route }) => {
       setQuantity(quantity - 1);
     }
   };
-  const handleAddToCart = () => {};
+  const handleAddToCart = async () => {
+    if (!isLoggedIn) {
+      Toast.show({
+        type: "error",
+        text1: "please Login first",
+      });
+      navigation.navigate("Login");
+    } else {
+      await CartService.addToCart(quantity, itemId);
+    }
+  };
   const renderImages = (item, index) => {
     return (
       <View key={index}>
