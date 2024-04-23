@@ -40,11 +40,8 @@ const LoginScreen = () => {
         console.log("selectorrr", isLoggedIn);
         let accessToken = result.data.accessToken;
         let refreshToken = result.data.refreshToken;
-        await AsyncStorage.setItem("accessToken", JSON.stringify(accessToken));
-        await AsyncStorage.setItem(
-          "refreshToken",
-          JSON.stringify(refreshToken)
-        );
+        await AsyncStorage.setItem("accessToken", accessToken);
+        await AsyncStorage.setItem("refreshToken", refreshToken);
         navigation.navigate("HomeStack");
       } else {
         console.log("b");

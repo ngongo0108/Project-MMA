@@ -34,11 +34,6 @@ class ProductService {
         });
       }
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: "Error server",
-      });
-    } finally {
       return initialData;
     }
   }
