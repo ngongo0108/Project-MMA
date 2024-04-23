@@ -17,7 +17,7 @@ import {
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Orders">
+    <Stack.Navigator initialRouteName="Profile">
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
