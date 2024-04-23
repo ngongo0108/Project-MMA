@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { ProfileScreen, 
-  OrdersScreen, 
+import {
+  ProfileScreen,
+  OrdersScreen,
   OrderTrackingScreen,
   AboutusScreen,
   ChangePassScreen,
@@ -10,7 +11,10 @@ import { ProfileScreen,
   MyWalletScreen,
   PolicyScreen,
   ContractScreen,
-  ContractDetailScreen } from "../screens";
+  ContractDetailScreen,
+  LoginScreen,
+  RegisterScreen,
+} from "../screens";
 
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
@@ -89,6 +93,20 @@ const ProfileStack = () => {
       <Stack.Screen
         name="OrderTracking"
         component={OrderTrackingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={RegisterScreen}
         options={{
           headerShown: false,
         }}

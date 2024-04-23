@@ -1,3 +1,6 @@
 import CategoryService from "./category.service";
 import ProductService from "./product.service";
-export { CategoryService, ProductService };
+import AuthenticationService from "./authentication.service";
+import CartService from "./cart.service";
+import UserService from "./user.service";
+export { CategoryService, ProductService, AuthenticationService, CartService, UserService };

@@ -53,7 +53,7 @@ const ProductsScreen = () => {
     fetchCategories();
   }, []);
   useEffect(() => {
-    if (categories.length > 0) setActiveCategory(categories[0]);
+    if (categories?.length > 0) setActiveCategory(categories[0]);
   }, [categories]);
   useEffect(() => {
     fetchProducts();
@@ -101,7 +101,7 @@ const ProductsScreen = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 20 }}
           >
-            {categories.map((category, index) => {
+            {categories?.map((category, index) => {
               let isActive = category === activeCategory;
               let textClass = isActive ? "font-bold" : "";
               return (
