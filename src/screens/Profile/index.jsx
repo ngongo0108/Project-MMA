@@ -15,16 +15,23 @@ import { Octicons } from "@expo/vector-icons";
 import { UserService } from "../../services";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userAction";
-import { useSelector } from "react-redux";
+
 const ProfileScreen = () => {
-  // const users = useSelector((state) => state.user);
   const dispacth = useDispatch();
   const navigation = useNavigation();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+      userName: '',
+      name: '',
+      address: '',
+      dateOfBird: '',
+      gender: '',
+      wallet: 0,
+      email: '',
+      phoneNumber: '',
+  });
   useEffect(() => {
     const fetchDataUser = async () => {
       const response = await UserService.getInfo();
-      console.log('response User: ',response);
       setUser(response);
     };
     fetchDataUser();
@@ -34,20 +41,19 @@ const ProfileScreen = () => {
   };
   return (
     <ScrollView className="w-full  mb-2">
-      <View className="flex-auto flex-row mt-5 items-center justify-around">
+      <View className="flex-auto flex-row mt-10 items-center justify-around">
         <Text></Text>
         <Text
-          className="#2D2D2F fon"
-          // style={{
-          //   color: "#2D2D2F",
-          //   fontSize: 25,
-          //   fontWeight: "bold",
-          //   position: "relative",
-          // }}
+          style={{
+            color: "#2D2D2F",
+            fontSize: 25,
+            fontWeight: "bold",
+            position: "relative",
+          }}
         >
           My account
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Edit Profile")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Edit Profile", {user})}>
           <AntDesign
             name="form"
             size={24}
@@ -58,21 +64,21 @@ const ProfileScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center", margin: 10 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", marginLeft: 10}}>
         <Image
           style={{ height: 100, width: 100, borderRadius: 100 }}
           source={{
-            uri: "https://thewellesleynews.com/wp-content/uploads/2020/09/avatar.jpg",
+            uri: "https://www.pngitem.com/pimgs/m/404-4042686_my-profile-person-icon-png-free-transparent-png.png",
           }}
         />
         <View style={{ marginLeft: 15 }}>
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "#393E41" }}>
-            John Doe
+          {user.name}
           </Text>
-          <Text style={{ fontSize: 15, color: "gray" }}>john@yopmail.com</Text>
+          <Text style={{ fontSize: 15, color: "gray" }}>{user.email}</Text>
         </View>
       </View>
-      <View style={{ backgroundColor: "#fff" }}>
+      <View style={{ backgroundColor: "#fff", marginTop: 10 }}>
         <View
           style={{
             flexDirection: "column",
@@ -89,7 +95,7 @@ const ProfileScreen = () => {
           </View>
 
           <Text style={{ fontSize: 20, fontWeight: "500", color: "red" }}>
-            <FontAwesome name="dollar" size={15} color="red" /> 999 999 999
+            <FontAwesome name="dollar" size={15} color="red" /> {user.wallet}
           </Text>
           <TouchableOpacity>
             <Text style={{ fontSize: 15, padding: 10, color: "#C23A27" }}>
