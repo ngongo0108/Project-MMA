@@ -17,7 +17,7 @@ class ProductService {
           categoryId: category.id,
           minPrice: price.min,
           maxPrice: price.max,
-          pageSize: 10,
+          pageSize: 6,
         },
       });
       if (response.data.isSuccess === true) {
