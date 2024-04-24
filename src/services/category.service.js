@@ -3,7 +3,7 @@ import API_URL_ENV from "../configs/api";
 import Toast from "react-native-toast-message";
 
 const API_URL = API_URL_ENV + `/Category`;
-
+const initialData = [];
 class CategoryService {
   static async getCategories() {
     try {
@@ -21,6 +21,7 @@ class CategoryService {
         type: "error",
         text1: "Error server",
       });
+      return initialData;
     }
   }
 }

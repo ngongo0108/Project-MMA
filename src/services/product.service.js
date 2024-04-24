@@ -3,6 +3,10 @@ import axios from "axios";
 import Toast from "react-native-toast-message";
 import API_URL_ENV from "../configs/api";
 const API_URL = API_URL_ENV + `/Product`;
+const initialData = {
+  totalPagesCount: 1,
+  items: [],
+};
 class ProductService {
   static async getProductsByPage(page, searchName, category, price) {
     try {
@@ -30,10 +34,7 @@ class ProductService {
         });
       }
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: "Error server",
-      });
+      return initialData;
     }
   }
   static async getProductById(ProductId) {
