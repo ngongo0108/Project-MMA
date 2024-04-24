@@ -82,6 +82,7 @@ const ProductsScreen = () => {
   }, [searchQuery, activeCategory]);
   useFocusEffect(
     useCallback(() => {
+      fetchCategories();
       setProductsDisplay([]);
       setCurrentPage(1);
     }, [])
@@ -95,8 +96,6 @@ const ProductsScreen = () => {
   const handleScroll = (event) => {
     const y = event.nativeEvent.contentOffset.y;
     setScrollPosition(y);
-
-    // Check if we have reached the end of the ScrollView
     if (y + scrollViewHeight >= contentHeight) {
       performEndOfScrollAction();
     }
