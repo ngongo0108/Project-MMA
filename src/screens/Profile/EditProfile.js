@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,8 @@ import {
   StyleSheet,
   Button,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused  } from "@react-navigation/native";
 import { FormatUtil } from "../../utils";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { UserService } from "../../services";
@@ -37,12 +36,25 @@ const EditProfileScreen = () => {
     });
   };
   const handleInfor = async () => {
-    await UserService.ChangeInfo(form);
-  };
+    try {
+        await UserService.ChangeInfo(form);
+       
+        const updatedUserData = await UserService.getInfo();
+        setForm(updatedUserData);
+    } catch (error) {
+        console.error("Error updating user information:", error);
+    }
+};
+// useEffect(() => {
+//     if (!isFocused) {
+//       // Send updated user data back to Profile screen
+//       navigation.emit('updateUserData', form);
+//     }
+//   }, [isFocused]);
   return (
     <ScrollView>
-      <View className="flex-row justify-between mx-4 items-center">
-        <View className="flex-row justify-between items-center bg-white p-3 rounded-md flex-1 mt-5">
+      <View className="flex-row justify-between pt-5 bg-white items-center">
+        <View className="flex-row justify-between items-center p-3 rounded-md flex-1 mt-5">
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <AntDesign name="left" size={20} color="black" />
           </TouchableOpacity>
@@ -69,24 +81,30 @@ const EditProfileScreen = () => {
               uri: "https://www.pngitem.com/pimgs/m/404-4042686_my-profile-person-icon-png-free-transparent-png.png",
             }}
           />
-          {/* <TouchableOpacity>
-                            <Ionicons name="camera-outline" size={24} color="black"/>
-                        </TouchableOpacity> */}
         </View>
         <View className="flex-row justify-between items-center border-b border-gray-200 mx-5">
           <Text className="text-gray-400 text-base">Name</Text>
-          <TextInput className="p-3 text-base" value={form.name} />
+          <TextInput 
+          className="p-3 text-base" 
+          onChangeText={(text) => handleInputChange("name", text)}
+          value={form.name} 
+          />
         </View>
         <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
           <Text className="text-gray-400 text-base">Address</Text>
           <TextInput
             className="p-3 text-base overflow-hidden text-ellipsis whitespace-nowrap"
+            onChangeText={(text) => handleInputChange("address", text)}
             value={form.address}
           />
         </View>
         <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
           <Text className="text-gray-400 text-base">Email</Text>
-          <TextInput className="p-3 text-base" value={form.email} />
+          <TextInput 
+          className="p-3 text-base" 
+          onChangeText={(text) => handleInputChange("email", text)}
+          value={form.email} 
+          />
         </View>
         <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
           <Text className="text-gray-400 text-base">Phone number</Text>
@@ -99,11 +117,15 @@ const EditProfileScreen = () => {
         </View>
         <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
           <Text className="text-gray-400 text-base">Gender</Text>
-          <TextInput className="p-3 text-base" value={form.gender} />
+          <TextInput 
+          className="p-3 text-base" 
+          onChangeText={(text) => handleInputChange("gender", text)}
+          value={form.gender} 
+          />
         </View>
         <View className="flex-row justify-between items-center border-t border-gray-200 mx-5">
           <Text className="text-gray-400 text-base">Date of birth</Text>
-          <TouchableOpacity onPress={() => setShowPicker(true)}>
+          <TouchableOpacity onPress={() => setShowPicker(true)} className="p-3 text-base" >
             <Text>{FormatUtil.formatDate(form.dateOfBird)}</Text>
           </TouchableOpacity>
           {showPicker && (

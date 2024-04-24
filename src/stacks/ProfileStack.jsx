@@ -9,7 +9,6 @@ import {
   ChangePassScreen,
   EditProfileScreen,
   HelpScreen,
-  MyWalletScreen,
   PolicyScreen,
   ContractScreen,
   ContractDetailScreen,
@@ -48,13 +47,6 @@ const ProfileStack = () => {
       <Stack.Screen
         name="Help & Contact Us"
         component={HelpScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="My Wallet"
-        component={MyWalletScreen}
         options={{
           headerShown: false,
         }}
