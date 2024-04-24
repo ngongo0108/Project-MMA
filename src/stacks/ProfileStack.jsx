@@ -20,7 +20,7 @@ import {
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Profile">
+    <Stack.Navigator initialRouteName="SignUp">
       <Stack.Screen name="Profile" options={{ headerShown: false }}>
         {() => <Protected Component={ProfileScreen} />}
       </Stack.Screen>
@@ -94,16 +94,12 @@ const ProfileStack = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen name="SignUp" options={{ headerShown: false }}>
+        {() => <ProtectedLogin Component={RegisterScreen} />}
+      </Stack.Screen>
       <Stack.Screen name="Login" options={{ headerShown: false }}>
         {() => <ProtectedLogin Component={LoginScreen} />}
       </Stack.Screen>
-      <Stack.Screen
-        name="SignUp"
-        component={RegisterScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
     </Stack.Navigator>
   );
 };

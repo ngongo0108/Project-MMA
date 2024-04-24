@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { AuthenticationService } from "../../services";
 import { useNavigation } from "@react-navigation/core";
 
@@ -18,28 +24,25 @@ const RegisterScreen = () => {
       await AuthenticationService.Register({
         userName: username,
         name: name,
-        dateOfBird: '2024-04-21T12:37:53.958Z',
-        gender: 'male',
+        dateOfBird: "2024-04-21T12:37:53.958Z",
+        gender: "male",
         email: email,
-        phoneNumber: '0123456787',
+        phoneNumber: "0123456787",
         password: password,
-        passwordConfirm: passwordConfirm
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
+        passwordConfirm: passwordConfirm,
+      });
+    } catch (error) {}
+  };
 
   const navigation = useNavigation();
   const handleSignUpLink = () => {
-    navigation.navigate('Login')
-  }
+    navigation.navigate("Login");
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Create An Account</Text>
       <View style={styles.input_container}>
-
         <View style={styles.text_container}>
           <TextInput
             style={styles.inputBox}
@@ -94,14 +97,14 @@ const RegisterScreen = () => {
       </View>
 
       <View style={styles.button_container}>
-        <TouchableOpacity  style={styles.button} onPress={handleRegister}>
-            <Text style={{fontSize: 20}}>Sign Up</Text>
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={{ fontSize: 20 }}>Sign Up</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.text_navigate} onPress={handleSignUpLink}>
-        <Text>Have an Account?</Text> 
-        <Text style={{fontWeight:'700'}}>Sign up</Text>
+        <Text>Have an Account?</Text>
+        <Text style={{ fontWeight: "700" }}>Sign up</Text>
       </TouchableOpacity>
     </View>
   );
@@ -111,7 +114,7 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: "center",
   },
   inputBox: {
     width: "85%",
@@ -130,26 +133,26 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: "center",
     marginTop: 50,
-    fontWeight: '600'
+    fontWeight: "600",
   },
   input_container: {
-    marginTop: 30
+    marginTop: 30,
   },
   button_container: {
     borderWidth: 0.2,
     margin: 50,
     borderRadius: 40,
-    width: '85%',
+    width: "85%",
   },
   button: {
     fontSize: 20,
     padding: 15,
-    backgroundColor: '#f19c38',
-    alignItems: 'center',
-    borderRadius: 40
+    backgroundColor: "#f19c38",
+    alignItems: "center",
+    borderRadius: 40,
   },
   text_navigate: {
-    flexDirection: 'row',
-    gap: 5
-  }
+    flexDirection: "row",
+    gap: 5,
+  },
 });

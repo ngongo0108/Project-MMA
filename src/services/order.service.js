@@ -82,5 +82,31 @@ class OrderService {
       return response.data.data;
     } catch (error) {}
   }
+  static async cancelOrder(orderId) {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      const response = await axios.put(`${API_URL}/UpdateOrderStatus`, {
+        id: orderId,
+        statusCode: 3,
+      });
+      if (response.data.isSuccess) {
+        Toast.show({
+          type: "success",
+          text1: "Cancel Order",
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: response.data.message,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+      });
+    }
+  }
 }
 export { OrderService as default };

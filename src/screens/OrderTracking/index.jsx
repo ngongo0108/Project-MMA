@@ -1,33 +1,23 @@
+import { useNavigation } from "@react-navigation/core";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FormatUtil } from "../../utils";
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Platform,
-  Button,
-} from "react-native";
+  BanIcon,
+  CheckCircleIcon,
+  ChevronLeftIcon,
+  ClockIcon,
+  TruckIcon,
+  XCircleIcon,
+} from "react-native-heroicons/solid";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import {
-  DocumentTextIcon,
-  CubeIcon,
-  ClockIcon,
-  TruckIcon,
-  CheckCircleIcon,
-  LocationMarkerIcon,
-  XCircleIcon,
-  ChevronLeftIcon,
-  BanIcon,
-} from "react-native-heroicons/solid";
-import { useNavigation } from "@react-navigation/core";
 import { SafeAreaView } from "react-native-safe-area-context";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { OrderService } from "../../services";
+
 const OrderStatus = ({ route }) => {
   const { itemId } = route.params;
   const navigation = useNavigation();
@@ -54,6 +44,9 @@ const OrderStatus = ({ route }) => {
     address: "",
     email: "",
     phoneNumber: "",
+    statusOrder: {
+      statusCode: 1,
+    },
   });
   const [orderItem, setOrderItem] = useState({
     productName: "",
@@ -73,6 +66,7 @@ const OrderStatus = ({ route }) => {
   };
   const fetchTrack = async () => {
     const response = await OrderService.getTracking(itemId);
+    console.log(response);
     setTrack(response);
   };
   useEffect(() => {
@@ -100,37 +94,23 @@ const OrderStatus = ({ route }) => {
             </>
           )}
         </View>
+
         <View className="flex-1 pl-4 ">
           <Text className="font-bold">{name}</Text>
           <Text className="text-gray-500">{descriptionMapping[name]}</Text>
-          <Text className="text-gray-500">{creationDate}</Text>
+          <Text className="text-gray-500">
+            {FormatUtil.formatDateString(creationDate)}
+          </Text>
         </View>
       </View>
     );
   };
-  const trackStep = [
-    {
-      title: "Order Placed",
-      description: "We have received your order",
-      time: "Jul 21 04:40 PM",
-    },
-    {
-      title: "Order Packed",
-      description: "Your Product packed and ready to shipped",
-      time: "Jul 21 04:40 PM",
-    },
-    {
-      title: "On the Way",
-      description:
-        "Your Order is placed successfully. Our Courier Partner will soon deliver the product",
-      time: "Jul 21 04:40 PM",
-    },
-    {
-      title: "Product Delivered",
-      description: "Our Courier Partner will deliver your product on",
-      time: "Jul 21 04:40 PM",
-    },
-  ];
+  const handleCancel = async () => {
+    await OrderService.cancelOrder(itemId);
+    fetchOrders();
+    fetchOrderItem();
+    fetchTrack();
+  };
 
   return (
     <>
@@ -182,7 +162,19 @@ const OrderStatus = ({ route }) => {
                 <Text className="text-xl font-bold pb-3 ">
                   Track Your Order
                 </Text>
-
+                {order.statusOrder.statusCode === 1 && (
+                  <TouchableOpacity
+                    className=" items-center"
+                    onPress={handleCancel}
+                  >
+                    <Text
+                      className="bg-pink-100 rounded-xl items-center justify-between flex-1 flex text-center"
+                      style={{ height: hp(3), width: wp(20) }}
+                    >
+                      Cancel
+                    </Text>
+                  </TouchableOpacity>
+                )}
                 <View className="relative">
                   {track.map((item, index) => {
                     return (
