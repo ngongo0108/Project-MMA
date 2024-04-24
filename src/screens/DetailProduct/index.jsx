@@ -140,9 +140,11 @@ const DetailProductScreen = ({ route }) => {
             >
               <ChevronLeftIcon size="23" stroke={50} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity className="bg-white rounded-2xl p-3 shadow ">
-              <HeartIcon size="23" color={"gray"} />
-            </TouchableOpacity>
+            {productData.status === 2 && (
+              <TouchableOpacity className="absolute top-1 right-3 rounded-full p-3 bg-slate-400">
+                <Text className="text-red-600 font-bold">Active</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
         <View className=" absolute bottom-14 w-full flex-row justify-center items-center mt-6 ">

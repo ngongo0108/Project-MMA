@@ -35,12 +35,11 @@ const ProductCard = ({ item }) => {
         end={{ x: 0.5, y: 1 }}
         className="absolute bottom-0"
       />
-      <TouchableOpacity
-        style={{ backgroundColor: "rgba(0,0,0,0.4)" }}
-        className="absolute top-1 right-3 rounded-full p-3 "
-      >
-        <HeartIcon size={wp(5)} color={item.favourites ? "red" : "white"} />
-      </TouchableOpacity>
+      {item.status === 2 && (
+        <TouchableOpacity className="absolute top-1 right-3 rounded-full p-3 bg-slate-400">
+          <Text className="text-red-600 font-bold">Active</Text>
+        </TouchableOpacity>
+      )}
       <View className="justify-between px-1">
         <Text className="text-white textShadow">{item.name}</Text>
       </View>
