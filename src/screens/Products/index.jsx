@@ -16,9 +16,15 @@ import {
   MagnifyingGlassIcon,
 } from "react-native-heroicons/solid";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ProductCard } from "../../components";
 import { CategoryService, ProductService } from "../../services";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/core";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 const ProductsScreen = () => {
   const priceOptions = [
     { label: "All prices", min: "0", max: "1000000000" },
@@ -33,11 +39,14 @@ const ProductsScreen = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedPrice, setSelectedPrice] = useState(priceOptions[0]);
   const [showFilters, setShowFilters] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const fetchCategories = async () => {
     const response = await CategoryService.getCategories();
     setCategories(response);
   };
   const fetchProducts = async () => {
+    setLoading(true);
     const products = await ProductService.getProductsByPage(
       currentPage,
       searchQuery,
@@ -46,8 +55,13 @@ const ProductsScreen = () => {
     );
     if (products !== undefined) {
       setTotalPages(products.totalPagesCount);
-      setProductsDisplay(products.items);
+      setProductsDisplay((currentProducts) => [
+        ...currentProducts,
+        ...products.items,
+      ]);
+      // setProductsDisplay(products.items);
     }
+    setLoading(false);
   };
   useEffect(() => {
     fetchCategories();
@@ -60,6 +74,45 @@ const ProductsScreen = () => {
   }, [currentPage, selectedPrice, activeCategory, searchQuery]);
   const handleSearchChange = (text) => {
     setSearchQuery(text);
+  };
+  useEffect(() => {
+    setCurrentPage(1);
+    setProductsDisplay([]);
+    setCurrentPage(1);
+  }, [searchQuery, activeCategory]);
+  useFocusEffect(
+    useCallback(() => {
+      setProductsDisplay([]);
+      setCurrentPage(1);
+    }, [])
+  );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0);
+  const [scrollViewHeight, setScrollViewHeight] = useState(0);
+  const handleScroll = (event) => {
+    const y = event.nativeEvent.contentOffset.y;
+    setScrollPosition(y);
+
+    // Check if we have reached the end of the ScrollView
+    if (y + scrollViewHeight >= contentHeight) {
+      performEndOfScrollAction();
+    }
+  };
+
+  const handleContentSizeChange = (width, height) => {
+    setContentHeight(height);
+  };
+
+  const handleLayout = (event) => {
+    const { height } = event.nativeEvent.layout;
+    setScrollViewHeight(height);
+  };
+
+  const performEndOfScrollAction = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
   return (
@@ -132,12 +185,27 @@ const ProductsScreen = () => {
         </View>
 
         {/* products */}
-        <ScrollView>
+        <ScrollView
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          onContentSizeChange={handleContentSizeChange}
+          onLayout={handleLayout}
+        >
           <View className="mx-4 flex-row justify-between flex-wrap">
             {productsDisplay.map((item, index) => {
               return <ProductCard item={item} key={index} />;
             })}
           </View>
+          {productsDisplay.length === 0 && (
+            <View className=" flex items-center">
+              <Image
+                source={require("../../../assets/listNull.png")}
+                style={{ height: hp(50), width: wp(80) }}
+              />
+            </View>
+          )}
+
+          <ActivityIndicator animating={loading} color={MD2Colors.red800} />
         </ScrollView>
       </SafeAreaView>
     </View>
