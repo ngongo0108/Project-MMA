@@ -66,7 +66,7 @@ function MainContainer() {
       />
       <Tab.Screen
         name={profileName}
-        component={ProfileStack}
+        component={LoginScreen}
         options={{
           headerShown: false,
         }}
