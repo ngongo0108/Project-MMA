@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CartScreen } from "../screens";
+import { CartScreen, HomeScreen } from "../screens";
 import VoucherScreen from "../screens/Voucher";
+import CheckoutScreen from "../screens/Cart/Checkout";
+import SuccessScreen from "../screens/Cart/SuccessScreen";
 const CartStack = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -15,6 +17,27 @@ const CartStack = () => {
       <Stack.Screen
         name="Voucher"
         component={VoucherScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Checkout"
+        component={CheckoutScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="CheckoutSuccessfully"
+        component={SuccessScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
         options={{
           headerShown: false,
         }}

@@ -18,6 +18,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const User = useSelector((state) => state.user);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,6 +39,7 @@ const LoginScreen = () => {
         console.log("login", result.data.accessToken);
         dispatch(loginSuccess(result.data));
         console.log("selectorrr", isLoggedIn);
+        console.log("User", User);
         let accessToken = result.data.accessToken;
         let refreshToken = result.data.refreshToken;
         await AsyncStorage.setItem("accessToken", accessToken);
