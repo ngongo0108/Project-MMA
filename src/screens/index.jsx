@@ -16,7 +16,9 @@ import ContractDetailScreen from "./Profile/ContractDetail";
 import Profile from "./Profile";
 import LoginScreen from "./Login";
 import RegisterScreen from "./Register";
-
+import WalletScreen from "./Profile/MyWallet";
+import RechargeScreen from "./Profile/Recharge";
+import TransactionDetailScreen from "./Profile/TransactionDetail";
 export {
   AppointmentScreen,
   HomeScreen,
@@ -33,7 +35,11 @@ export {
   PolicyScreen,
   ContractScreen,
   ContractDetailScreen,
+  RechargeScreen,
+  TransactionDetailScreen,
+  WalletScreen,
   Profile,
   LoginScreen,
   RegisterScreen,
+  
 };

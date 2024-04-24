@@ -5,13 +5,13 @@ import Toast from "react-native-toast-message";
 const API_URL = API_URL_ENV + `/Contract`;
 const initialData = [];
 class ContractService {
-    static async getContract() {
+    static async getContract(pageIndex, pageSize) {
         try {
             const accessToken = await AsyncStorage.getItem("accessToken");
             axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-            const response = await axios.get(`${API_URL}/GetContractByLoginCustomer`);
+            const response = await axios.get(`${API_URL}/GetContractsByLoginCustomer?pageIndex=${pageIndex}&pageSize=${pageSize}`);
             if (response.data.isSuccess) {
-                return response.data.data;
+                return response.data.data.items;
             } else {
                 Toast.show({
                 type: "error",
@@ -21,16 +21,16 @@ class ContractService {
         } catch (error) {
             Toast.show({
                 type: "error",
-                text1: "Error server",
+                text1: "Error server Contract",
             });
             return initialData;
         }
     }
-    static async getContractItem() {
+    static async getContractItem(contractId) {
         try {
             const accessToken = await AsyncStorage.getItem("accessToken");
             axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-            const response = await axios.get(`${API_URL}/GetContractItem`, {
+            const response = await axios.get(`${API_URL}/GetContractItem?contractId=${contractId}`, {
                 
             });
             if (response.data.isSuccess) {
@@ -49,15 +49,11 @@ class ContractService {
             return initialData;
         }
     }
-    static async updateStatusContract(contract) {
-        console.log(contract);
+    static async updateStatusContract(contractId, status) {
         try {
             const accessToken = await AsyncStorage.getItem("accessToken");
             axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-            const response = await axios.put(`${API_URL}/UpdateStatusContract`, {
-                contractId: contract.data.item.contractID,
-                status: contract.data.item.statusContract
-            });
+            const response = await axios.put(`${API_URL}/UpdateStatusContract?contractId=${contractId}&status=${status}`);
             if (response.data.isSuccess) {
                 Toast.show({
                 type: "success",

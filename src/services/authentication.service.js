@@ -8,7 +8,6 @@ class AuthenticationService {
   static async Login(inputs) {
     try {
       const response = await axios.post(`${API_URL}/Login`, inputs);
-      console.log("done api");
       if (response.data.isSuccess === true) {
         Toast.show({
           type: "success",

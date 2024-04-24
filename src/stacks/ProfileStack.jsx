@@ -14,8 +14,10 @@ import {
   ContractDetailScreen,
   LoginScreen,
   RegisterScreen,
+  WalletScreen,
+  RechargeScreen,
+  TransactionDetailScreen
 } from "../screens";
-
 const ProfileStack = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -73,12 +75,34 @@ const ProfileStack = () => {
         }}
       />
       <Stack.Screen
+        name="My Wallet"
+        component={WalletScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Recharge"
+        component={RechargeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Transaction Detail"
+        component={TransactionDetailScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="Orders"
         component={OrdersScreen}
         options={{
           headerShown: false,
         }}
       />
+      
       <Stack.Screen
         name="OrderTracking"
         component={OrderTrackingScreen}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,11 +6,9 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-  StyleSheet,
-  Button,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation, useRoute, useIsFocused  } from "@react-navigation/native";
+import { useNavigation, useRoute  } from "@react-navigation/native";
 import { FormatUtil } from "../../utils";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { UserService } from "../../services";
@@ -45,12 +43,6 @@ const EditProfileScreen = () => {
         console.error("Error updating user information:", error);
     }
 };
-// useEffect(() => {
-//     if (!isFocused) {
-//       // Send updated user data back to Profile screen
-//       navigation.emit('updateUserData', form);
-//     }
-//   }, [isFocused]);
   return (
     <ScrollView>
       <View className="flex-row justify-between pt-5 bg-white items-center">
