@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   ScrollView,
-  TextInput,
   Image,
   TouchableOpacity,
   StyleSheet,
@@ -13,19 +12,36 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
+import { UserService } from "../../services";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/userAction";
+
 const ProfileScreen = () => {
+  const dispacth = useDispatch();
   const navigation = useNavigation();
+  const [user, setUser] = useState({
+      userName: '',
+      name: '',
+      address: '',
+      dateOfBird: '',
+      gender: '',
+      wallet: 0,
+      email: '',
+      phoneNumber: '',
+  });
+  useEffect(() => {
+    const fetchDataUser = async () => {
+      const response = await UserService.getInfo();
+      setUser(response);
+    };
+    fetchDataUser();
+  }, []);
+  const handleLogout = () => {
+    dispacth(logout());
+  };
   return (
-    <ScrollView style={{ width: "100%" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 40,
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
+    <ScrollView className="w-full  mb-2">
+      <View className="flex-auto flex-row mt-10 items-center justify-around">
         <Text></Text>
         <Text
           style={{
@@ -37,7 +53,7 @@ const ProfileScreen = () => {
         >
           My account
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Edit Profile")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Edit Profile", {user})}>
           <AntDesign
             name="form"
             size={24}
@@ -48,21 +64,21 @@ const ProfileScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center", margin: 20 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", marginLeft: 10}}>
         <Image
           style={{ height: 100, width: 100, borderRadius: 100 }}
           source={{
-            uri: "https://thewellesleynews.com/wp-content/uploads/2020/09/avatar.jpg",
+            uri: "https://www.pngitem.com/pimgs/m/404-4042686_my-profile-person-icon-png-free-transparent-png.png",
           }}
         />
         <View style={{ marginLeft: 15 }}>
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "#393E41" }}>
-            John Doe
+          {user.name}
           </Text>
-          <Text style={{ fontSize: 15, color: "gray" }}>john@yopmail.com</Text>
+          <Text style={{ fontSize: 15, color: "gray" }}>{user.email}</Text>
         </View>
       </View>
-      <View style={{ backgroundColor: "#fff" }}>
+      <View style={{ backgroundColor: "#fff", marginTop: 10 }}>
         <View
           style={{
             flexDirection: "column",
@@ -79,7 +95,7 @@ const ProfileScreen = () => {
           </View>
 
           <Text style={{ fontSize: 20, fontWeight: "500", color: "red" }}>
-            <FontAwesome name="dollar" size={15} color="red" /> 999 999 999
+            <FontAwesome name="dollar" size={15} color="red" /> {user.wallet}
           </Text>
           <TouchableOpacity>
             <Text style={{ fontSize: 15, padding: 10, color: "#C23A27" }}>
@@ -171,7 +187,7 @@ const ProfileScreen = () => {
           <AntDesign name="right" size={24} color="#393E41" marginRight={10} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleLogout()}>
         <View style={styles.container}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MaterialIcons

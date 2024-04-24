@@ -1,71 +1,120 @@
-import React from "react";
-import { View, Text, ScrollView, TextInput, Image, TouchableOpacity, StyleSheet, Button } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Button,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { FormatUtil } from "../../utils";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { UserService } from "../../services";
 const EditProfileScreen = () => {
-    const navigation = useNavigation();
-    return(
-        <ScrollView>
-            <View className="flex-row justify-between mx-4 items-center">
-            <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{backgroundColor: '#fff', padding: 15, borderRadius: 10, marginTop: 10, flexDirection:'row', flex: 1}}
-            >
-                <AntDesign name="left" size={24} color="black" />
-                <Text style={{fontSize: 20, marginLeft: 10}}>Edit Profile</Text>
-            </TouchableOpacity>
-            </View>
-            <View style={{ alignItems:'center', margin: 20}}>
-                <Image style={{height: 180, width: 180, borderRadius: 100, position:'relative'}} source ={{uri: 'https://thewellesleynews.com/wp-content/uploads/2020/09/avatar.jpg'}}/>
-                <TouchableOpacity>
-                    <Ionicons name="camera-outline" size={24} color="black" style={styles.camera}/>
-                </TouchableOpacity>
-                
-            </View>
-            <View>
-                <Text style={styles.text}>Username</Text>
-                <TextInput style={styles.textInput}>John Doe</TextInput>
-                <Text style={styles.text}>Name</Text>
-                <TextInput style={styles.textInput}>Thomeson John Doe</TextInput>
-                <Text style={styles.text}>Address</Text>
-                <TextInput style={styles.textInput}>Ho Chi Minh City</TextInput>
-                <Text style={styles.text}>Email</Text>
-                <TextInput style={styles.textInput}>john@yopmail.com</TextInput>
-                <Text style={styles.text}>Phone number</Text>
-                <TextInput style={styles.textInput}>(84+) 987 654 321</TextInput>
-            </View>
-            <View style={{padding: 10}}>
-                <Button
-                onPress={()=>{}}
-                title="Save"
-                color="#2290FF"
-                />
-            </View>
-        </ScrollView>
-    )
-}
-const styles = StyleSheet.create({
-    textInput : {
-        backgroundColor: '#fff', 
-        padding: 10, 
-        borderRadius: 10, 
-        fontWeight: "400", 
-        fontSize: 15,
-        margin: 10
-    },
-    text: {
-        fontSize: 18,
-        fontWeight: '400',
-        marginLeft: 15,
-    },
-    camera: {
-        backgroundColor: '#fff',
-        padding: 5,
-        borderRadius: 50,
-        position: 'absolute',
-        bottom: 0,
-        right: -80,
-    }
-})
+  const route = useRoute();
+  const user = route.params.user;
+  const navigation = useNavigation();
+  const [form, setForm] = useState(user);
+  const date = FormatUtil.formatDate(form.dateOfBird);
+  const [showPicker, setShowPicker] = useState(false);
+  const handleInputChange = (key, value) => {
+    setForm({
+      ...form,
+      [key]: value,
+    });
+  };
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || new date(form.dateOfBird);
+    setShowPicker(false);
+    setForm({
+      ...form,
+      dateOfBird: currentDate.toISOString(),
+    });
+  };
+  const handleInfor = async () => {
+    await UserService.ChangeInfo(form);
+  };
+  return (
+    <ScrollView>
+      <View className="flex-row justify-between mx-4 items-center">
+        <View className="flex-row justify-between items-center bg-white p-3 rounded-md flex-1 mt-5">
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <AntDesign name="left" size={20} color="black" />
+          </TouchableOpacity>
+          <Text className="text-lg">Edit Profile</Text>
+          <TouchableOpacity onPress={() => handleInfor()}>
+            <Text className="text-lime-700 text-lg">Done</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View className="bg-white rounded-xl m-3 shadow-md p-2 relative pt-40 mt-20">
+        <View
+          className="items-center absolute rounded-full shadow-lg bg-white p-2 left-1/4"
+          style={{ top: -50 }}
+        >
+          <Image
+            style={{
+              height: 180,
+              width: 180,
+              borderRadius: 100,
+              position: "relative",
+            }}
+            source={{
+              uri: "https://www.pngitem.com/pimgs/m/404-4042686_my-profile-person-icon-png-free-transparent-png.png",
+            }}
+          />
+          {/* <TouchableOpacity>
+                            <Ionicons name="camera-outline" size={24} color="black"/>
+                        </TouchableOpacity> */}
+        </View>
+        <View className="flex-row justify-between items-center border-b border-gray-200 mx-5">
+          <Text className="text-gray-400 text-base">Name</Text>
+          <TextInput className="p-3 text-base" value={form.name} />
+        </View>
+        <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
+          <Text className="text-gray-400 text-base">Address</Text>
+          <TextInput
+            className="p-3 text-base overflow-hidden text-ellipsis whitespace-nowrap"
+            value={form.address}
+          />
+        </View>
+        <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
+          <Text className="text-gray-400 text-base">Email</Text>
+          <TextInput className="p-3 text-base" value={form.email} />
+        </View>
+        <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
+          <Text className="text-gray-400 text-base">Phone number</Text>
+          <TextInput
+            className="p-3 text-base"
+            onChangeText={(text) => handleInputChange("phoneNumber", text)}
+            value={form.phoneNumber}
+            keyboardType="numeric"
+          />
+        </View>
+        <View className="flex-row justify-between items-center border-y border-gray-200 mx-5">
+          <Text className="text-gray-400 text-base">Gender</Text>
+          <TextInput className="p-3 text-base" value={form.gender} />
+        </View>
+        <View className="flex-row justify-between items-center border-t border-gray-200 mx-5">
+          <Text className="text-gray-400 text-base">Date of birth</Text>
+          <TouchableOpacity onPress={() => setShowPicker(true)}>
+            <Text>{FormatUtil.formatDate(form.dateOfBird)}</Text>
+          </TouchableOpacity>
+          {showPicker && (
+            <DateTimePicker
+              value={new Date(form.dateOfBird)}
+              onChange={onChange}
+            />
+          )}
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
 export default EditProfileScreen;
