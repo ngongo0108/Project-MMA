@@ -6,10 +6,8 @@ import { Alert } from "react-native";
 const API_URL = API_URL_ENV + `/Authentication`;
 class AuthenticationService {
   static async Login(inputs) {
-    console.log('assa');
     try {
       const response = await axios.post(`${API_URL}/Login`, inputs);
-      console.log('ssss', response.data);
       if (response.data.isSuccess === true) {
         Toast.show({
           type: "success",
