@@ -17,6 +17,7 @@ import ContractDetailScreen from "./Profile/ContractDetail";
 import Profile from "./Profile";
 import LoginScreen from "./Login";
 import RegisterScreen from "./Register";
+import VoucherScreen from "./Voucher";
 
 export {
   AppointmentScreen,
@@ -38,4 +39,5 @@ export {
   Profile,
   LoginScreen,
   RegisterScreen,
+  VoucherScreen,
 };
