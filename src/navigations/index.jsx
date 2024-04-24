@@ -12,6 +12,7 @@ import {
 } from "../stacks";
 import LoginScreen from "../screens/Login";
 import { CartScreen, RegisterScreen } from "../screens";
+import VoucherScreen from "../screens/Voucher";
 //Screen names
 const homeName = "HomeStack";
 const appointmentName = "AppointmentStack";
