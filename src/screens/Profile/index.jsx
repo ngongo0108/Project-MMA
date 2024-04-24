@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,210 +10,234 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Octicons } from "@expo/vector-icons";
 import { UserService } from "../../services";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userAction";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
 const ProfileScreen = () => {
   const dispacth = useDispatch();
   const navigation = useNavigation();
   const [user, setUser] = useState({
-      userName: '',
-      name: '',
-      address: '',
-      dateOfBird: '',
-      gender: '',
-      wallet: 0,
-      email: '',
-      phoneNumber: '',
+    userName: "",
+    name: "",
+    address: "",
+    dateOfBird: "",
+    gender: "",
+    wallet: 0,
+    email: "",
+    phoneNumber: "",
   });
-
-  useEffect(() => {
-    const fetchDataUser = async () => {
-      const response = await UserService.getInfo();
-      setUser(response);
-    };
-    fetchDataUser();
-  }, []);
+  const fetchDataUser = async () => {
+    const response = await UserService.getInfo();
+    setUser(response);
+  };
+  useFocusEffect(
+    useCallback(() => {
+      fetchDataUser();
+    }, [])
+  );
   const handleLogout = () => {
     dispacth(logout());
   };
 
   return (
     <ScrollView className="w-full h-full mb-2 flex-1">
-      <View className='flex-row items-center ml-5 mt-16'>
+      <View className="flex-row items-center ml-5 mt-16">
         <Image
-          className='h-28 w-28 rounded-full'
+          className="h-28 w-28 rounded-full"
           source={{
             uri: "https://www.pngitem.com/pimgs/m/404-4042686_my-profile-person-icon-png-free-transparent-png.png",
           }}
         />
-        <View className='ml-4'>
-          <TouchableOpacity className='flex-row' onPress={() => navigation.navigate("Edit Profile", {user})}>
-          <Text className='text-xl font-extrabold text-black p-2'>
-          {user.name}
-          </Text>
-            <AntDesign
-              name="right"
-              size={16}
-              color="#4E5357"
-              padding={13}
-            />
+        <View className="ml-4">
+          <TouchableOpacity
+            className="flex-row"
+            onPress={() => navigation.navigate("Edit Profile", { user })}
+          >
+            <Text className="text-xl font-extrabold text-black p-2">
+              {user.name}
+            </Text>
+            <AntDesign name="right" size={16} color="#4E5357" padding={13} />
           </TouchableOpacity>
-         
-          <Text className='text-sm text-gray-400 pl-2'>{user.email}</Text>
+
+          <Text className="text-sm text-gray-400 pl-2">{user.email}</Text>
         </View>
       </View>
-      <View className='mt-3 bg-pink-100'>
-        <View className='flex-col justify-center items-center pl-4'>
-          <View className='flex-row'>
+      <View className="mt-3 bg-pink-100">
+        <View className="flex-col justify-center items-center pl-4">
+          <View className="flex-row">
             <AntDesign name="wallet" size={24} color="#393E41" padding={10} />
-            <Text className='text-lg font-light p-3'>
-              Wallet
-            </Text>
+            <Text className="text-lg font-light p-3">Wallet</Text>
           </View>
 
-          <Text className='text-lg font-medium text-red-600'>
-            <FontAwesome name="dollar" size={15} color="red" /> 
+          <Text className="text-lg font-medium text-red-600">
+            <FontAwesome name="dollar" size={15} color="red" />
             {user.wallet}
           </Text>
           <TouchableOpacity>
-            <Text className='text-base p-3 text-red-700'>
+            <Text className="text-base p-3 text-red-700">
               <AntDesign name="plus" size={20} color="#C23A27" /> ADD MONEY
             </Text>
           </TouchableOpacity>
         </View>
       </View>
-      <View className='pt-7 bg-white '>
-        <TouchableOpacity onPress={() => navigation.navigate("Change Password")}>
-          <View className='flex-row justify-between items-center bg-white mx-3'>
-            <View className='flex-row items-center m-1'>
-              <View className='bg-purple-700 rounded-lg mr-2'>
-                <Ionicons name="key-outline" size={24} color="#fff" padding={8}/>
+      <View className="pt-7 bg-white ">
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Change Password")}
+        >
+          <View className="flex-row justify-between items-center bg-white mx-3">
+            <View className="flex-row items-center m-1">
+              <View className="bg-purple-700 rounded-lg mr-2">
+                <Ionicons
+                  name="key-outline"
+                  size={24}
+                  color="#fff"
+                  padding={8}
+                />
               </View>
-              <Text className='text-xl font-normal text-black'>
+              <Text className="text-xl font-normal text-black">
                 Change Password
               </Text>
             </View>
-            <AntDesign name="right" size={20} color="#393E41" marginRight={10} />
+            <AntDesign
+              name="right"
+              size={20}
+              color="#393E41"
+              marginRight={10}
+            />
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Orders")}>
-          <View className='flex-row justify-between items-center bg-white mx-3'>
-            <View className='flex-row items-center m-1'>
-                <View className='bg-red-500 rounded-lg mr-2'>
-                  <Octicons
+          <View className="flex-row justify-between items-center bg-white mx-3">
+            <View className="flex-row items-center m-1">
+              <View className="bg-red-500 rounded-lg mr-2">
+                <Octicons
                   name="list-ordered"
                   size={24}
                   color="#fff"
                   padding={8}
                 />
-                </View>
-              <Text className='text-lg font-medium text-black'>
-              Orders
-              </Text>
+              </View>
+              <Text className="text-lg font-medium text-black">Orders</Text>
             </View>
-            <AntDesign name="right" size={20} color="#393E41" marginRight={10} />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Contract")}>
-        <View className='flex-row justify-between items-center bg-white mx-3'>
-              <View className='flex-row items-center m-1'>
-                  <View className='bg-orange-500 rounded-lg mr-2'>
+            <AntDesign
+              name="right"
+              size={20}
+              color="#393E41"
+              marginRight={10}
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Contract")}>
+          <View className="flex-row justify-between items-center bg-white mx-3">
+            <View className="flex-row items-center m-1">
+              <View className="bg-orange-500 rounded-lg mr-2">
+                <AntDesign
+                  name="filetext1"
+                  size={24}
+                  color="#fff"
+                  padding={8}
+                />
+              </View>
+              <Text className="text-lg font-medium text-black">Contract</Text>
+            </View>
+            <AntDesign
+              name="right"
+              size={20}
+              color="#393E41"
+              marginRight={10}
+            />
+          </View>
+        </TouchableOpacity>
+        <View className="mt-10">
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Privacy Policy")}
+          >
+            <View className="flex-row justify-between items-center bg-white mx-3">
+              <View className="flex-row items-center m-1">
+                <View className="bg-green-500 rounded-lg mr-2">
+                  <AntDesign name="Safety" size={24} color="#fff" padding={8} />
+                </View>
+                <Text className="text-lg font-medium text-black">
+                  Privacy Policy
+                </Text>
+              </View>
+              <AntDesign
+                name="right"
+                size={20}
+                color="#393E41"
+                marginRight={10}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("About Us")}>
+            <View className="flex-row justify-between items-center bg-white mx-3">
+              <View className="flex-row items-center m-1">
+                <View className="bg-blue-500 rounded-lg mr-2">
                   <AntDesign
-                    name="filetext1"
+                    name="exclamationcircleo"
                     size={24}
                     color="#fff"
                     padding={8}
                   />
-                  </View>
-                <Text className='text-lg font-medium text-black'>
-                Contract
+                </View>
+                <Text className="text-lg font-medium text-black">About us</Text>
+              </View>
+              <AntDesign
+                name="right"
+                size={20}
+                color="#393E41"
+                marginRight={10}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Help & Contact Us")}
+          >
+            <View className="flex-row justify-between items-center bg-white mx-3">
+              <View className="flex-row items-center m-1">
+                <View className="bg-yellow-500 rounded-lg mr-2">
+                  <AntDesign
+                    name="message1"
+                    size={24}
+                    color="#fff"
+                    padding={8}
+                  />
+                </View>
+                <Text className="text-lg font-medium text-black">
+                  Helps & Contact Us
                 </Text>
               </View>
-              <AntDesign name="right" size={20} color="#393E41" marginRight={10} />
-          </View>
-      </TouchableOpacity>
-      <View className='mt-10'>
-      <TouchableOpacity onPress={() => navigation.navigate("Privacy Policy")}>
-        <View className='flex-row justify-between items-center bg-white mx-3'>
-            <View className='flex-row items-center m-1'>
-                <View className='bg-green-500 rounded-lg mr-2'>
-                  <AntDesign 
-                  name="Safety"
-                  size={24}
-                  color="#fff"
-                  padding={8}
-                />
-                </View>
-              <Text className='text-lg font-medium text-black'>
-              Privacy Policy
-              </Text>
+              <AntDesign
+                name="right"
+                size={20}
+                color="#393E41"
+                marginRight={10}
+              />
             </View>
-            <AntDesign name="right" size={20} color="#393E41" marginRight={10} />
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("About Us")}>
-        <View className='flex-row justify-between items-center bg-white mx-3'>
-            <View className='flex-row items-center m-1'>
-                <View className='bg-blue-500 rounded-lg mr-2'>
-                  <AntDesign 
-                  name="exclamationcircleo"
-                  size={24}
-                  color="#fff"
-                  padding={8}
-                />
+        <View className="mt-10">
+          <TouchableOpacity onPress={() => handleLogout()}>
+            <View className="flex-row justify-between items-center bg-white mx-3">
+              <View className="flex-row items-center m-1">
+                <View className="bg-gray-500 rounded-lg mr-2">
+                  <MaterialIcons
+                    name="logout"
+                    size={24}
+                    color="#fff"
+                    padding={8}
+                  />
                 </View>
-              <Text className='text-lg font-medium text-black'>
-              About us
-              </Text>
+                <Text className="text-lg font-medium text-black">Log out</Text>
+              </View>
             </View>
-            <AntDesign name="right" size={20} color="#393E41" marginRight={10} />
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Help & Contact Us")}>
-        <View className='flex-row justify-between items-center bg-white mx-3'>
-            <View className='flex-row items-center m-1'>
-                <View className='bg-yellow-500 rounded-lg mr-2'>
-                  <AntDesign 
-                  name="message1"
-                  size={24}
-                  color="#fff"
-                  padding={8}
-                />
-                </View>
-              <Text className='text-lg font-medium text-black'>
-              Helps & Contact Us 
-              </Text>
-            </View>
-            <AntDesign name="right" size={20} color="#393E41" marginRight={10} />
-        </View>
-      </TouchableOpacity>
       </View>
-      <View className='mt-10'>
-      <TouchableOpacity onPress={() => handleLogout()}>
-        <View className='flex-row justify-between items-center bg-white mx-3'>
-          <View className='flex-row items-center m-1'>
-            <View className='bg-gray-500 rounded-lg mr-2'>
-              <MaterialIcons
-                name="logout"
-                  size={24}
-                  color="#fff"
-                  padding={8}
-                />
-                </View>
-            <Text className='text-lg font-medium text-black'>
-              Log out
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-      </View>
-      
-      </View>      
     </ScrollView>
   );
 };
