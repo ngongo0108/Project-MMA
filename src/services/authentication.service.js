@@ -13,39 +13,42 @@ class AuthenticationService {
           type: "success",
           text1: response.data.message,
         });
-        return response.data
+        return response.data;
       } else {
-        console.log('Login fail');
+        console.log("Login fail");
         Toast.show({
           type: "error",
           text1: response.data.message,
         });
       }
     } catch (error) {
-      console.log('Error', error);
+      console.log("Error", error);
     }
   }
 
   static async Register(inputs) {
-    console.log('aaaa', inputs);
     try {
       const response = await axios.post(`${API_URL}/Register`, inputs);
       // const response = await axios.post(`https://eb88-171-239-142-13.ngrok-free.app/api/Authentication/Register`, inputs);
-      console.log('register');
+      console.log("register");
 
-      if (response.data.isSuccess === true) { 
-        console.log('Register successfully', response.data);
-        return 1;
+      if (response.data.isSuccess === true) {
+        Toast.show({
+          type: "success",
+          text1: response.data.message,
+        });
       } else {
-        const errorData = await response.data;
-        console.error("Register failed", errorData);
-        return errorData;
+        Toast.show({
+          type: "error",
+          text1: response.data.message,
+        });
       }
     } catch (error) {
-      console.log('Register', error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+      });
     }
   }
 }
 export { AuthenticationService as default };
-
-
