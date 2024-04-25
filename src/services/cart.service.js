@@ -7,7 +7,6 @@ const API_URL = API_URL_ENV + `/Cart`;
 class CartService {
   static async addToCart(quantity, productID) {
     const accessToken = await AsyncStorage.getItem("accessToken");
-    console.log(accessToken);
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     try {
       const response = await axios.post(`${API_URL}/AddProduct`, {

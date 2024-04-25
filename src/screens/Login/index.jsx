@@ -11,7 +11,7 @@ import { Feather } from "@expo/vector-icons";
 import { AuthenticationService } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/actions/userAction";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
@@ -33,28 +33,16 @@ const LoginScreen = () => {
         userName: username,
         password: password,
       });
-      console.log("4444444");
-      console.log("123", result);
       if (result.isSuccess === true) {
-        console.log("login", result.data.accessToken);
         dispatch(loginSuccess(result.data));
-        console.log("selectorrr", isLoggedIn);
-        console.log("User", User);
         let accessToken = result.data.accessToken;
         let refreshToken = result.data.refreshToken;
         await AsyncStorage.setItem("accessToken", accessToken);
         await AsyncStorage.setItem("refreshToken", refreshToken);
-        navigation.navigate("HomeStack");
       } else {
-        console.log("b");
       }
-    } catch (error) {
-      console.log("slsls", error);
-      console.log(error);
-    }
+    } catch (error) {}
   };
-
-  console.log("selectorrr", isLoggedIn);
 
   return (
     <View style={styles.container}>

@@ -1,15 +1,15 @@
-import { useNavigation, useRoute } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
 import { useEffect, useState } from "react";
 import {
-  View,
-  Text,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { useSelector } from "react-redux";
-import UserService from "../../services/user.service";
+import { ChevronLeftIcon } from "react-native-heroicons/solid";
 import OrderService from "../../services/order.service";
+import UserService from "../../services/user.service";
 
 const CheckoutScreen = ({ route }) => {
   const [address, setAddress] = useState("");
@@ -46,12 +46,10 @@ const CheckoutScreen = ({ route }) => {
         voucherId: voucher?.id,
       });
 
-      if (result.data.isSuccess === true) {
-        navigation.navigate("CheckoutSuccessfully");
+      if (result.isSuccess === true) {
+        navigation.navigate("Cart");
       }
-    } catch (error) {
-      console.log("Checkout", error);
-    }
+    } catch (error) {}
   };
 
   return (

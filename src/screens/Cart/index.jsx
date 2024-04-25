@@ -57,6 +57,7 @@ const CartScreen = () => {
   useFocusEffect(
     useCallback(() => {
       getVoucherData();
+      fetchCartItem();
     }, [])
   );
 
