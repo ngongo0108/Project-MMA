@@ -102,9 +102,7 @@ const OrdersScreen = () => {
                 onPress={() => setActiveFilter(item)}
               >
                 <Text
-                  className={`text-base  font-bold ${
-                    isSelect && "text-red-300"
-                  }`}
+                  className={`text-xs  font-bold ${isSelect && "text-red-300"}`}
                 >
                   {StatusMap[item]}
                 </Text>

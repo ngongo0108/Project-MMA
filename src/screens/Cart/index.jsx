@@ -24,6 +24,17 @@ const CartScreen = () => {
     navigation.navigate("Voucher");
   };
 
+  const handleNavigateCheckout = () => {
+    navigation.navigate("Checkout", {
+      cartItem: cartItem,
+      totalPrice: totalPrice,
+      voucher: {
+        id: voucher.id,
+        name: voucher.voucherName,
+      },
+    });
+  };
+
   const getVoucherData = async () => {
     console.log("AAAAAAAAAAss");
     try {
@@ -46,6 +57,7 @@ const CartScreen = () => {
   useFocusEffect(
     useCallback(() => {
       getVoucherData();
+      fetchCartItem();
     }, [])
   );
 
@@ -63,10 +75,10 @@ const CartScreen = () => {
       if (voucher.minimumOrderValue < total) {
         if ((total * voucher.percent) / 100 < voucher.maximumDiscountAmount) {
           const discountValue = total - (total * voucher.percent) / 100;
-          setTotalPrice(discountValue)
+          setTotalPrice(discountValue);
         } else {
-          const discountValue = total - (voucher.maximumDiscountAmount);
-          setTotalPrice(discountValue)
+          const discountValue = total - voucher.maximumDiscountAmount;
+          setTotalPrice(discountValue);
         }
       } else {
         setTotalPrice(total);
@@ -150,7 +162,7 @@ const CartScreen = () => {
         <View style={styles.total_info}>
           <Text style={styles.regularText}>Total: ${totalPrice}</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleNavigateCheckout}>
           <View style={styles.total_payment}>
             <Text style={styles.boldText}>Buy ({cartItem?.length})</Text>
           </View>
@@ -188,7 +200,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 0.2,
     borderRadius: 10,
-    marginTop: 10
+    marginTop: 10,
   },
   cart_info: {
     flexDirection: "column",
