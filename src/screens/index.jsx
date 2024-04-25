@@ -18,6 +18,7 @@ import Profile from "./Profile";
 import LoginScreen from "./Login";
 import RegisterScreen from "./Register";
 import VoucherScreen from "./Voucher";
+import CheckoutScreen from "./Cart/Checkout";
 
 export {
   AppointmentScreen,
@@ -40,4 +41,5 @@ export {
   LoginScreen,
   RegisterScreen,
   VoucherScreen,
+  CheckoutScreen
 };
