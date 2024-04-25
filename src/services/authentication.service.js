@@ -22,30 +22,32 @@ class AuthenticationService {
         });
       }
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: "error",
-      });
+      console.log("Error", error);
     }
   }
 
   static async Register(inputs) {
-    console.log("aaaa", inputs);
     try {
       const response = await axios.post(`${API_URL}/Register`, inputs);
       // const response = await axios.post(`https://eb88-171-239-142-13.ngrok-free.app/api/Authentication/Register`, inputs);
       console.log("register");
 
       if (response.data.isSuccess === true) {
-        console.log("Register successfully", response.data);
-        return 1;
+        Toast.show({
+          type: "success",
+          text1: response.data.message,
+        });
       } else {
-        const errorData = await response.data;
-        console.error("Register failed", errorData);
-        return errorData;
+        Toast.show({
+          type: "error",
+          text1: response.data.message,
+        });
       }
     } catch (error) {
-      console.log("Register", error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+      });
     }
   }
 }

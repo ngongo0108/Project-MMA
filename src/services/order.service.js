@@ -8,18 +8,35 @@ const initialData = {
   totalPagesCount: 0,
   items: [],
 };
+
 class OrderService {
-  static async checkOut() {
+  static async checkOut(inputs) {
+    const accessToken = await AsyncStorage.getItem("accessToken");
+    console.log(accessToken);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     try {
-      const response = await axios.get(`${API_URL}/CheckOut`);
+      const response = await axios.post(`${API_URL}/CheckOut`, inputs);
+
+      if (response.data.isSuccess === true) {
+        Toast.show({
+          type: "success",
+          text1: response.data.message,
+        });
+        return response.data;
+      } else {
+        Toast.show({
+          type: "error",
+          text1: response.data.message,
+        });
+      }
     } catch (error) {
       Toast.show({
         type: "error",
-        text1: "Error server",
+        text1: "Error",
       });
-      return initialData;
     }
   }
+
   static async getOrders(StatusCode, PageSize, PageIndex) {
     try {
       const accessToken = await AsyncStorage.getItem("accessToken");
@@ -81,6 +98,32 @@ class OrderService {
       );
       return response.data.data;
     } catch (error) {}
+  }
+  static async cancelOrder(orderId) {
+    try {
+      const accessToken = await AsyncStorage.getItem("accessToken");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      const response = await axios.put(`${API_URL}/UpdateOrderStatus`, {
+        id: orderId,
+        statusCode: 3,
+      });
+      if (response.data.isSuccess) {
+        Toast.show({
+          type: "success",
+          text1: "Cancel Order",
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: response.data.message,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+      });
+    }
   }
 }
 export { OrderService as default };

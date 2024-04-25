@@ -1,20 +1,88 @@
-
-
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import { CartService } from "../../services";
-import { useFocusEffect } from "@react-navigation/core";
+import { useFocusEffect, useNavigation } from "@react-navigation/core";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import VoucherService from "../../services/voucher.service";
 
 const CartScreen = () => {
   const [cartItem, setCartItem] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [voucher, setVoucher] = useState("");
+
+  const navigation = useNavigation();
+
+  const handleNavigateVoucher = () => {
+    navigation.navigate("Voucher");
+  };
+
+  const handleNavigateCheckout = () => {
+    navigation.navigate("Checkout", {
+      cartItem: cartItem,
+      totalPrice: totalPrice,
+      voucher: {
+        id: voucher.id,
+        name: voucher.voucherName,
+      },
+    });
+  };
+
+  const getVoucherData = async () => {
+    console.log("AAAAAAAAAAss");
+    try {
+      const existingData = await AsyncStorage.getItem("vouchers");
+      console.log("BHBHBH", existingData);
+      if (existingData) {
+        const parsedData = JSON.parse(existingData);
+        const value = parsedData[0];
+        const detail_voucher = await VoucherService.getVoucherById(value);
+        console.log("DDDDDDDD", detail_voucher.data);
+        setVoucher(detail_voucher.data);
+      } else {
+        setVoucher("");
+      }
+    } catch (error) {
+      console.log("Error getting voucher data", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getVoucherData();
+      fetchCartItem();
+    }, [])
+  );
+
+  // const getVoucherById = async () => {
+  //   const result = await
+  // }
 
   useEffect(() => {
     // Calculate total price whenever cart items change
     const calculateTotalPrice = () => {
-      const total = cartItem.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-      setTotalPrice(total);
+      const total = cartItem.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      if (voucher.minimumOrderValue < total) {
+        if ((total * voucher.percent) / 100 < voucher.maximumDiscountAmount) {
+          const discountValue = total - (total * voucher.percent) / 100;
+          setTotalPrice(discountValue);
+        } else {
+          const discountValue = total - voucher.maximumDiscountAmount;
+          setTotalPrice(discountValue);
+        }
+      } else {
+        setTotalPrice(total);
+      }
     };
     calculateTotalPrice();
   }, [cartItem]);
@@ -45,7 +113,10 @@ const CartScreen = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.cart_item}>
-      <Image style={styles.image} source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }} />
+      <Image
+        style={styles.image}
+        source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
+      />
       <View style={styles.cart_info}>
         <Text style={styles.item_name}>{item.productName}</Text>
         <View style={styles.item_price}>
@@ -77,9 +148,13 @@ const CartScreen = () => {
         <View style={styles.total_info_voucher}>
           <Text style={styles.regularText}>Voucher</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleNavigateVoucher}>
           <View style={styles.total_payment_voucher}>
-            <Text style={styles.boldText}>Voucher Title</Text>
+            {voucher ? (
+              <Text style={styles.boldText}>{voucher.voucherName}</Text>
+            ) : (
+              <Text style={styles.boldText}>Voucher Title</Text>
+            )}
           </View>
         </TouchableOpacity>
       </View>
@@ -87,7 +162,7 @@ const CartScreen = () => {
         <View style={styles.total_info}>
           <Text style={styles.regularText}>Total: ${totalPrice}</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleNavigateCheckout}>
           <View style={styles.total_payment}>
             <Text style={styles.boldText}>Buy ({cartItem?.length})</Text>
           </View>
@@ -125,6 +200,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 0.2,
     borderRadius: 10,
+    marginTop: 10,
   },
   cart_info: {
     flexDirection: "column",

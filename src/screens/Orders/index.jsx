@@ -1,19 +1,27 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from "react-native";
 import {
   ChevronLeftIcon,
   MinusIcon,
   PlusIcon,
   HeartIcon,
 } from "react-native-heroicons/solid";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import { OrderService } from "../../services";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 const OrdersScreen = () => {
   const navigation = useNavigation();
   const [orders, setOrders] = useState([]);
@@ -27,6 +35,31 @@ const OrdersScreen = () => {
   };
   const filter = [1, 2, 3, 4, 5];
   const [activeFilter, setActiveFilter] = useState(1);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0);
+  const [scrollViewHeight, setScrollViewHeight] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const handleScroll = (event) => {
+    const y = event.nativeEvent.contentOffset.y;
+    setScrollPosition(y);
+    if (y + scrollViewHeight >= contentHeight) {
+      performEndOfScrollAction();
+    }
+  };
+
+  const handleContentSizeChange = (width, height) => {
+    setContentHeight(height);
+  };
+
+  const handleLayout = (event) => {
+    const { height } = event.nativeEvent.layout;
+    setScrollViewHeight(height);
+  };
+
+  const performEndOfScrollAction = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
   const fetchOrders = async () => {
     const response = await OrderService.getOrders(
       activeFilter,
@@ -36,9 +69,13 @@ const OrdersScreen = () => {
     setOrders(response.items);
   };
   useEffect(() => {
-    console.log(activeFilter);
     fetchOrders();
   }, [activeFilter]);
+  useFocusEffect(
+    useCallback(() => {
+      setActiveFilter(1), setCurrentPage(1), setTotalPages(1), fetchOrders();
+    }, [])
+  );
 
   return (
     <>
@@ -65,9 +102,7 @@ const OrdersScreen = () => {
                 onPress={() => setActiveFilter(item)}
               >
                 <Text
-                  className={`text-base  font-bold ${
-                    isSelect && "text-red-300"
-                  }`}
+                  className={`text-xs  font-bold ${isSelect && "text-red-300"}`}
                 >
                   {StatusMap[item]}
                 </Text>
@@ -80,8 +115,17 @@ const OrdersScreen = () => {
             );
           })}
         </View>
-        <ScrollView className="bg-slate-500">
-          <View className="pb-36 bg-slate-400 pt-3">
+        <ScrollView
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          onContentSizeChange={handleContentSizeChange}
+          onLayout={handleLayout}
+          className="bg-slate-500"
+        >
+          <View
+            className="pb-36 bg-slate-400 pt-3"
+            style={{ minHeight: hp(80) }}
+          >
             {orders.map((item, index) => {
               return (
                 <TouchableOpacity
@@ -111,6 +155,15 @@ const OrdersScreen = () => {
                 </TouchableOpacity>
               );
             })}
+            {orders.length === 0 && (
+              <View className=" flex items-center">
+                <Image
+                  source={require("../../../assets/listNull.png")}
+                  style={{ height: hp(50), width: wp(80) }}
+                />
+              </View>
+            )}
+            <ActivityIndicator animating={loading} color={MD2Colors.red800} />
           </View>
         </ScrollView>
       </SafeAreaView>

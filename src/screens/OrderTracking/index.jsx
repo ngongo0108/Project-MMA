@@ -17,6 +17,7 @@ import {
 } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OrderService } from "../../services";
+
 const OrderStatus = ({ route }) => {
   const { itemId } = route.params;
   const navigation = useNavigation();
@@ -43,6 +44,9 @@ const OrderStatus = ({ route }) => {
     address: "",
     email: "",
     phoneNumber: "",
+    statusOrder: {
+      statusCode: 1,
+    },
   });
   const [orderItem, setOrderItem] = useState({
     productName: "",
@@ -62,6 +66,7 @@ const OrderStatus = ({ route }) => {
   };
   const fetchTrack = async () => {
     const response = await OrderService.getTracking(itemId);
+    console.log(response);
     setTrack(response);
   };
   useEffect(() => {
@@ -89,6 +94,7 @@ const OrderStatus = ({ route }) => {
             </>
           )}
         </View>
+
         <View className="flex-1 pl-4 ">
           <Text className="font-bold">{name}</Text>
           <Text className="text-gray-500">{descriptionMapping[name]}</Text>
@@ -98,6 +104,12 @@ const OrderStatus = ({ route }) => {
         </View>
       </View>
     );
+  };
+  const handleCancel = async () => {
+    await OrderService.cancelOrder(itemId);
+    fetchOrders();
+    fetchOrderItem();
+    fetchTrack();
   };
 
   return (
@@ -150,7 +162,19 @@ const OrderStatus = ({ route }) => {
                 <Text className="text-xl font-bold pb-3 ">
                   Track Your Order
                 </Text>
-
+                {order.statusOrder.statusCode === 1 && (
+                  <TouchableOpacity
+                    className=" items-center"
+                    onPress={handleCancel}
+                  >
+                    <Text
+                      className="bg-pink-100 rounded-xl items-center justify-between flex-1 flex text-center"
+                      style={{ height: hp(3), width: wp(20) }}
+                    >
+                      Cancel
+                    </Text>
+                  </TouchableOpacity>
+                )}
                 <View className="relative">
                   {track.map((item, index) => {
                     return (
