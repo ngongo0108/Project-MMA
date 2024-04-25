@@ -25,7 +25,17 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/core";
+import {
+  BanIcon,
+  CheckCircleIcon,
+  ChevronLeftIcon,
+  ClockIcon,
+  TruckIcon,
+  XCircleIcon,
+} from "react-native-heroicons/solid";
 const ProductsScreen = () => {
+  const navigation = useNavigation();
   const priceOptions = [
     { label: "All prices", min: "0", max: "1000000000" },
     { label: "100 - 200", min: "100", max: "200" },
@@ -120,17 +130,26 @@ const ProductsScreen = () => {
         blurRadius={40}
         className="absolute w-full h-full"
         source={{
-          uri: "https://www.shutterstock.com/shutterstock/photos/2128959116/display_1500/stock-vector-abstract-waving-particle-technology-background-design-abstract-wave-moving-dots-flow-particles-hi-2128959116.jpg",
+          uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKzFQWax1Lnuoxv2I2RCBRw0fi2ysn1YFHjc8Gb9WYHHNofNvk&s",
         }}
       />
       <SafeAreaView className="flex-1">
         {/* punch line */}
+
+        <View className="flex-row justify-between mx-4 items-center">
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            className="bg-pink-300   rounded-2xl p-3 shadow"
+          >
+            <ChevronLeftIcon size="23" stroke={50} color="black" />
+          </TouchableOpacity>
+        </View>
         <View className="my-12 space-y-2">
-          <Text className="mx-4 text-5xl font-medium text-gray-100">
-            Elegant and
+          <Text className="mx-4 text-5xl font-medium text-gray-500">
+            Mom and
           </Text>
-          <Text className="mx-4 text-5xl font-medium text-gray-100">
-            <Text className="font-extrabold">Timeless </Text>Watches
+          <Text className="mx-4 text-5xl font-medium text-gray-500">
+            <Text className="font-extrabold">BaBy </Text>Shop
           </Text>
         </View>
         {/* search */}
@@ -155,7 +174,7 @@ const ProductsScreen = () => {
           >
             {categories?.map((category, index) => {
               let isActive = category === activeCategory;
-              let textClass = isActive ? "font-bold" : "";
+              let textClass = isActive ? "font-bold text-pink-800" : "";
               return (
                 <Animatable.View
                   delay={index * 120}
@@ -167,9 +186,9 @@ const ProductsScreen = () => {
                     onPress={() => setActiveCategory(category)}
                   >
                     <Text
-                      className={`text-white text-base tracking-widest ${textClass}`}
+                      className={`text-black text-base tracking-widest ${textClass}`}
                     >
-                      {category.name}
+                      {category.name.split(";")[0]}
                     </Text>
                     {isActive ? (
                       <View className="flex-row justify-center">
