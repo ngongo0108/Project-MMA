@@ -7,9 +7,9 @@ import {
 
 const { height, width } = Dimensions.get('window')
 
-export default function SliderDate() {
+export default function SliderDate({action}) {
 
-    const [data, setData] = useState([1, 2,3,4,5,6,7,8,9,10]);
+    const [data, setData] = useState(["10:00", "11:00", "12:00", "13:30", "14:15", "15:00", "16:30", "17:00", "18:15",]);
     const [currentIndex, setCurrentIndex] = useState(0);
     function getIndex(index) {
         setCurrentIndex(index);
@@ -27,13 +27,15 @@ export default function SliderDate() {
                         return (
                             <View style={{justifyContent: 'center'}}>
                                 <TouchableOpacity
+                                    
                                     key={index}
-                                    onPress={() => {getIndex(index)}}
+                                    onPress={() => {getIndex(index); action(item)}}
                                     style={{
                                         width: currentIndex == index ? 60 : 50,
                                         height: currentIndex == index ? 60 : 50,
-                                        borderRadius: currentIndex == index ? 30 : 25,
-                                        backgroundColor: currentIndex == index ? '#e6417b' : 'gray',
+                                        borderRadius: currentIndex == index ? 10 : 5,
+                                        backgroundColor: currentIndex == index ? '#e6417b' : 'pink',
+                                        borderColor: '#e6417b',
                                         marginLeft: 5,
                                         justifyContent: 'center',
                                         alignItems: 'center',

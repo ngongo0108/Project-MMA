@@ -6,35 +6,59 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const API_URL = API_URL_ENV + `/Appointment`;
 
 class AppointmentService {
-    static async createAppointment(name, date, phone, email, time) {
-        const accessToken = await AsyncStorage.getItem("accessToken");
-        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        try {
-            const response = await axios.post(`${API_URL}/CreateAppointment`,
-                {
-                    name: name,
-                    date: date,
-                    phoneNumber: phone,
-                    email: email,
-                    time: time,
-                }
-            );
-            console.log(response.data);
+  static async createAppointment(name, date, phone, email, time) {
+    const accessToken = await AsyncStorage.getItem("accessToken");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    try {
+      const response = await axios.post(`${API_URL}/CreateAppointment`, {
+        name: name,
+        date: date,
+        phoneNumber: phone,
+        email: email,
+        time: time,
+      });
+      console.log(response.data);
 
-            if (response.data.isSuccess === true) {
-                return response.data.data;
-            } else {
-                Toast.show({
-                    type: "error",
-                    text1: response.data.message,
-                });
-            }
-        } catch (error) {
-            Toast.show({
-                type: "error",
-                text1: "Error server",
-            });
-        }
+      if (response.data.isSuccess === true) {
+        Toast.show({
+          type: "success",
+          text1: response.data.message,
+        });
+        return response.data.data;
+      } else {
+        Toast.show({
+          type: "error",
+          text1: response.data.message,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Error server",
+      });
     }
+  }
+  static async getAppointmentByJWT() {
+    const accessToken = await AsyncStorage.getItem("accessToken");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    try {
+      const response = await axios.get(
+        `${API_URL}/GetAppointmentByJWT?PageSize=${1000}&PageIndex=${0}`
+      );
+      if (response.data.isSuccess === true) {
+        return response.data.data;
+      } else {
+        Toast.show({
+          type: "error",
+          text1: response.data.message,
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Error server",
+      });
+    }
+  }
 }
 export { AppointmentService as default };

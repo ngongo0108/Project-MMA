@@ -2,17 +2,17 @@ import { View, Text, ScrollView } from "react-native";
 import SliderBanner from "../../components/Home/SliderBanner";
 import CategoryList from "../../components/Home/CategoryList";
 import Banner from "../../components/Home/Banner";
+import SliderBanner1 from "../../components/Home/SliderBanner1";
 
 const HomeScreen = () => {
   return (
-    <ScrollView>
-      <Text style={{ color: 'white', fontSize: 50 }}>Home Screen</Text>
+    <View>
+      {/* <View style={{height: 60, backgroundColor: '#e6417b', }}><Text style={{ color: 'white', fontSize: 30, fontWeight: '500' }}></Text></View> */}
       <SliderBanner />
       <CategoryList />
-      <SliderBanner />
+      <SliderBanner1 />
       <CategoryList />
-      <Banner />
-    </ScrollView>
+    </View>
   );
 };
 export default HomeScreen;

@@ -4,15 +4,15 @@ import { useNavigation } from '@react-navigation/core'
 
 const { height, width } = Dimensions.get('window')
 
-export default function SliderBanner() {
+export default function SliderBanner1() {
     const navigation = useNavigation();
 
     const [data, setData] = useState([
-        'https://marketplace.canva.com/EAFoiE2zJcc/1/0/1600w/canva-yellow-playful-color-mom-and-baby-shop-business-banner-ZlevGgv_Xd8.jpg', 
-        'https://www.shutterstock.com/image-vector/3d-vector-cute-baby-product-600nw-2340974895.jpg', 
-        'https://static.vecteezy.com/system/resources/thumbnails/041/930/836/small/baby-items-horizontal-web-banner-kid-toys-booties-diapers-ball-pacifier-bodysuit-pyramid-and-other-newborn-elements-illustration-for-header-website-cover-templates-in-modern-design-vector.jpg', 
-        'https://img.freepik.com/premium-vector/baby-goods-sale-banner-with-place-text-kids-store-vector-poster-with-hand-drawn-illustrations_255592-854.jpg', 
-        'https://www.shutterstock.com/image-vector/baby-goods-horizontal-sale-banner-260nw-1171773772.jpg',
+        'https://www.shutterstock.com/image-vector/happy-mothers-day-sale-banner-260nw-1940755933.jpg', 
+        'https://img.freepik.com/free-psd/flat-design-babysitter-template-design_23-2151077011.jpg', 
+        'https://img.freepik.com/free-psd/baby-shop-banner-template_23-2148971064.jpg', 
+        'https://img.freepik.com/free-psd/baby-shop-banner-template_23-2149045097.jpg', 
+        'https://img.freepik.com/free-psd/flat-design-baby-store-landing-page_23-2150318619.jpg',
     ]);
     const [currentIndex, setCurrentIndex] = useState(0);
 

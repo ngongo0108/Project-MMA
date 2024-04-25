@@ -4,7 +4,7 @@ import { View, Text, Button, Modal, StyleSheet, ScrollView, Dimensions, FlatList
 const { width, height } = Dimensions.get('window');
 
 
-export default function DatePickerSlider() {
+export default function DatePickerSlider({action}) {
 
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
@@ -29,6 +29,7 @@ export default function DatePickerSlider() {
 
   function getIndex(index) {
     setCurrentIndex(index);
+   
   };
 
   let x = 0;
@@ -40,18 +41,16 @@ export default function DatePickerSlider() {
           
           {item.map((day, j) => {
             const txt = format(day, 'E');
-            x++;
-            // console.log(x);
 
             return (
               <TouchableOpacity
-                key={j}
-                onPress={() => { getIndex(j) }}
+                key={format(day, 'd')}
+                onPress={() => { getIndex(format(day, 'd')); action((day.toISOString())) }}
                 style={{
-                  width: currentIndex === j ? 60 : 40,
-                  height: currentIndex === j ? 60 : 50,
-                  borderRadius: currentIndex === j ? 30 : 25,
-                  backgroundColor: currentIndex === j ? 'pink' : 'white',
+                  width: currentIndex === format(day, 'd') ? 60 : 40,
+                  height: currentIndex === format(day, 'd') ? 60 : 50,
+                  borderRadius: currentIndex === format(day, 'd') ? 30 : 25,
+                  backgroundColor: currentIndex === format(day, 'd') ? 'pink' : 'white',
                   marginLeft: 5,
                   justifyContent: 'center',
                   alignItems: 'center',
