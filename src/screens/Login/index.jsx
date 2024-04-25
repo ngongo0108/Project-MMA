@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/actions/userAction";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -22,12 +23,13 @@ const LoginScreen = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleSignUpLink = () => {
     navigation.navigate("SignUp");
   };
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const result = await AuthenticationService.Login({
         userName: username,
@@ -41,7 +43,10 @@ const LoginScreen = () => {
         await AsyncStorage.setItem("refreshToken", refreshToken);
       } else {
       }
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false);
+    }
+    setLoading(false);
   };
 
   return (
@@ -72,7 +77,7 @@ const LoginScreen = () => {
           />
         </View>
       </View>
-
+      <ActivityIndicator animating={loading} color={MD2Colors.red800} />
       <TouchableOpacity
         style={styles.login_container}
         onPress={() => handleLogin()}

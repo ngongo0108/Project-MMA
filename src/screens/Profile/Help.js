@@ -8,15 +8,15 @@ const HelpScreen = () => {
     const navigation = useNavigation();
     return(
         <ScrollView style={{width:"100%"}}>
-            <View className="flex-row justify-between mx-4 items-center">
-            <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={{backgroundColor: '#fff', padding: 15, borderRadius: 10, marginTop: 10, flexDirection:'row', flex: 1}}
-            >
-                <AntDesign name="left" size={24} color="black" />
-                <Text style={{fontSize: 20, marginLeft: 10}}>Helps & Contact Us</Text>
-            </TouchableOpacity>
-            </View>
+            <View className="flex-row justify-between pt-2 bg-yellow-600 items-center rounded-b-2xl">
+                <View className="flex-row justify-between items-center px-3 py-2 rounded-md flex-1 mt-5">
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <AntDesign name="left" size={20} color="black" />
+                    </TouchableOpacity>
+                    <Text className="text-lg">Helps & Contact Us</Text>
+                    <Text></Text>
+                </View>
+            </View>  
             <View style={{marginTop: 20}}>
                 <View style={{flexDirection: 'row', alignItems:'center'}}>
                     <Feather name="phone-call" size={24} color="#393E41" paddingLeft={15} />
