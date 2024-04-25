@@ -1,7 +1,7 @@
 import axios from "axios";
 import API_URL_ENV from "../configs/api";
 import Toast from "react-native-toast-message";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const API_URL = API_URL_ENV + `/Contract`;
 const initialData = [];
 class ContractService {
@@ -10,6 +10,7 @@ class ContractService {
             const accessToken = await AsyncStorage.getItem("accessToken");
             axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
             const response = await axios.get(`${API_URL}/GetContractsByLoginCustomer?pageIndex=${pageIndex}&pageSize=${pageSize}`);
+            console.log('response', response.data);
             if (response.data.isSuccess) {
                 return response.data.data.items;
             } else {
@@ -26,13 +27,11 @@ class ContractService {
             return initialData;
         }
     }
-    static async getContractItem(contractId) {
+    static async getContractItem(contractID) {
         try {
             const accessToken = await AsyncStorage.getItem("accessToken");
             axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-            const response = await axios.get(`${API_URL}/GetContractItem?contractId=${contractId}`, {
-                
-            });
+            const response = await axios.get(`${API_URL}/GetContractItem?contractId=${contractID}`);
             if (response.data.isSuccess) {
                 return response.data.data;
             } else {

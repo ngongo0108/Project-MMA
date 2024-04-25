@@ -36,7 +36,6 @@ const EditProfileScreen = () => {
   const handleInfor = async () => {
     try {
         await UserService.ChangeInfo(form);
-       
         const updatedUserData = await UserService.getInfo();
         setForm(updatedUserData);
     } catch (error) {
