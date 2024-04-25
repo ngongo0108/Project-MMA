@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import SliderDate from "../../components/Booking/SliderDate";
@@ -41,7 +42,7 @@ export default function Booking() {
       time
     );
     // console.log(response);
-    if (response !== undefined ) {
+    if (response !== undefined) {
       navigation.navigate("Appointment");
     } else {
       Toast.show({
@@ -62,6 +63,12 @@ export default function Booking() {
     setPhone(user.phoneNumber);
   }, [user]);
 
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  const arrow = "<";
+
   return (
     <View
       style={{
@@ -72,11 +79,21 @@ export default function Booking() {
       }}
     >
       <Image
-        style={{ width: width, height: 200, opacity: 0.6 }}
+        style={{ width: width, height: 200, opacity: 0.6, position: 'relative' }}
         source={{
           uri: "https://womensmentalhealth.org/wp-content/uploads/2016/09/Mother-Infant-Love-1.jpg",
         }}
       />
+      <View style={styles.floatingButtonContainer}>
+        <TouchableOpacity
+          style={styles.floatingButton}
+          onPress={() => {
+            navigation.goBack("Booking");
+          }}
+        >
+          <Text style={styles.buttonText}>{arrow}</Text>
+        </TouchableOpacity>
+      </View>
 
       <ScrollView
         style={{
@@ -156,9 +173,8 @@ export default function Booking() {
               <Text style={{ fontSize: 20, fontWeight: "600" }}>Booking</Text>
             </Button>
           </View>
-
         </View>
-        <View style={{height: 80}} />
+        <View style={{ height: 80 }} />
       </ScrollView>
     </View>
   );
@@ -185,5 +201,29 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+
+  floatingButtonContainer: {
+    position: "absolute",
+    top: 30,
+    left: 20,
+  },
+  floatingButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 30,
+    backgroundColor: "#e6417b",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3, // Shadow for Android
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+  },
+  buttonText: {
+    fontSize: 30,
+    color: "#fff",
+    fontWeight: "bold",
   },
 });

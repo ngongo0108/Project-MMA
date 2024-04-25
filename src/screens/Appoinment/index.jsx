@@ -80,8 +80,39 @@ const AppointmentScreen = () => {
   };
 
   return (
-    <View>
-      <Text>Appointment Screen</Text>
+    <View style={{ height: height }}>
+      <Text style={styles.header}>Appointment History</Text>
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: "https://womensmentalhealth.org/wp-content/uploads/2016/09/Mother-Infant-Love-1.jpg",
+          }}
+        />
+        <Text style={styles.header}>Appointment History</Text>
+
+        <ScrollView
+          style={{
+            marginTop: -50,
+            width: width,
+            // height: 200,
+            backgroundColor: "white",
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 50,
+          }}
+        >
+          {renderAppointments()}
+        </ScrollView>
+      </View>
+
+      <View style={styles.floatingButtonContainer}>
+        <TouchableOpacity
+          style={styles.floatingButton}
+          onPress={() => {navigation.navigate('Booking')}}
+        >
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -131,8 +162,3 @@ const styles = StyleSheet.create({
   },
 });
 export default AppointmentScreen;
-
-
-const styles = StyleSheet.create({
-
-})
